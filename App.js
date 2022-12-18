@@ -1,17 +1,8 @@
-import { Button, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "./Screens/HomeScreen";
-
-function DetailsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Details Screen</Text>
-      <Button title="Go to Home" onPress={() => navigation.navigate("Home")} />
-    </View>
-  );
-}
+import TimerScreen from "./Screens/TimerScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +28,7 @@ function App() {
             title: "Welcome to the meditation app",
           }}
         />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen name="Timer" component={TimerScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -18,16 +18,13 @@ const meditationEntries = [
   },
 ];
 
-function HomeScreen({ navigation }) {
+const HomeScreen = ({ navigation }) => {
   return (
     <View className="flex-1 items-center justify-center bg-gray-800 p-5">
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate("Details")}
-      />
       <TouchableOpacity
         title="Begin meditation"
         className="py-2 px-4 bg-blue-200 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+        onPress={() => navigation.navigate("Timer")}
       >
         <Text className="text-lg">Begin meditation</Text>
       </TouchableOpacity>
@@ -42,6 +39,6 @@ function HomeScreen({ navigation }) {
       ))}
     </View>
   );
-}
+};
 
 export default HomeScreen;
