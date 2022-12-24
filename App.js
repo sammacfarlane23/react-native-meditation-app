@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "./Screens/HomeScreen";
 import TimerScreen from "./Screens/TimerScreen";
+import FinishScreen from "./Screens/FinishScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ function App() {
           }}
         />
         <Stack.Screen name="Timer" component={TimerScreen} />
+        <Stack.Screen name="Finish" component={FinishScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

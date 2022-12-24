@@ -23,14 +23,15 @@ const HomeScreen = ({ navigation }) => {
     <View className="flex-1 items-center justify-center bg-gray-800 p-5">
       <TouchableOpacity
         title="Begin meditation"
-        className="py-2 px-4 bg-blue-200 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+        className="py-2 px-4 mb-8 bg-blue-200 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
         onPress={() => navigation.navigate("Timer")}
       >
-        <Text className="text-lg">Begin meditation</Text>
+        <Text className="text-lg font-bold">Begin meditation</Text>
       </TouchableOpacity>
 
       {meditationEntries.map((entry) => (
         <Card
+          key={entry.text}
           title={entry.date}
           text={entry.text}
           duration={entry.duration}

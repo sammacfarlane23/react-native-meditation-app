@@ -60,6 +60,14 @@ const TimerScreen = ({ navigation }) => {
           <Text className="text-lg text-center">Reset</Text>
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity
+        title="Begin meditation"
+        className="bg-white mt-10"
+        onPress={() => navigation.navigate("Finish")}
+      >
+        <Text className="text-lg">Finish Screen</Text>
+      </TouchableOpacity>
     </View>
   );
 };
