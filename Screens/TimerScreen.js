@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, TextInput } from "react-native";
+
+import Button from "../Components/Button";
 
 const TimerScreen = ({ navigation }) => {
   const [isTimerActive, setIsTimerActive] = useState(false);
@@ -39,35 +41,26 @@ const TimerScreen = ({ navigation }) => {
       )}
 
       <View className="w-1/2">
-        <TouchableOpacity
-          title="Go home"
-          className="py-2 px-4 min-w-full mb-6 bg-blue-200 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+        <Button
+          className="mb-6"
           onPress={() => setIsTimerActive(!isTimerActive)}
         >
-          <Text className="text-lg text-center">
-            {isTimerActive ? "Pause" : "Start"}
-          </Text>
-        </TouchableOpacity>
+          {isTimerActive ? "Pause" : "Start"}
+        </Button>
 
-        <TouchableOpacity
-          title="Go home"
-          className="py-2 px-4 min-w-full bg-blue-200 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+        <Button
           onPress={() => {
             setTimer(60 * 30);
             setIsTimerActive(false);
           }}
         >
-          <Text className="text-lg text-center">Reset</Text>
-        </TouchableOpacity>
-      </View>
+          Reset
+        </Button>
 
-      <TouchableOpacity
-        title="Begin meditation"
-        className="bg-white mt-10"
-        onPress={() => navigation.navigate("Finish")}
-      >
-        <Text className="text-lg">Finish Screen</Text>
-      </TouchableOpacity>
+        <Button className="mt-20" onPress={() => navigation.navigate("Finish")}>
+          Finish Screen
+        </Button>
+      </View>
     </View>
   );
 };

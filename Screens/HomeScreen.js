@@ -1,5 +1,6 @@
-import { Button, View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
+import Button from "../Components/Button";
 import Card from "../Components/Card";
 
 const meditationEntries = [
@@ -21,13 +22,12 @@ const meditationEntries = [
 const HomeScreen = ({ navigation }) => {
   return (
     <View className="flex-1 items-center justify-center bg-gray-800 p-5">
-      <TouchableOpacity
-        title="Begin meditation"
-        className="py-2 px-4 mb-8 bg-blue-200 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+      <Button
+        className="max-w-1/2"
         onPress={() => navigation.navigate("Timer")}
       >
-        <Text className="text-lg font-bold">Begin meditation</Text>
-      </TouchableOpacity>
+        Begin meditation
+      </Button>
 
       {meditationEntries.map((entry) => (
         <Card

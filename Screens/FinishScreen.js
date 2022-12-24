@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
 
+import Button from "../Components/Button";
+
 const TimerScreen = ({ navigation }) => {
   const [entryText, setEntryText] = useState(null);
 
@@ -21,28 +23,23 @@ const TimerScreen = ({ navigation }) => {
           placeholder="How did this session make you feel?"
         />
         <View className="w-1/2 my-8">
-          <TouchableOpacity className="py-2 px-4 mb-8 min-w-full bg-blue-200 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
-            <Text
-              className="text-lg text-center"
-              onPress={() => {
-                // Here we will save the entry to the database
-                navigation.navigate("Home");
-              }}
-            >
-              Submit Entry
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity className="py-2 px-4 min-w-full bg-blue-200 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
-            <Text
-              className="text-lg text-center"
-              onPress={() => {
-                // Here we will save the entry to the database
-                navigation.navigate("Home");
-              }}
-            >
-              Skip
-            </Text>
-          </TouchableOpacity>
+          <Button
+            onPress={() => {
+              // Here we will save the entry to the database
+              navigation.navigate("Home");
+            }}
+          >
+            Submit Entry
+          </Button>
+          <Button
+            onPress={() => {
+              // Here we will save the entry to the database
+              navigation.navigate("Home");
+            }}
+            className="mt-8"
+          >
+            Skip
+          </Button>
         </View>
       </View>
     </View>
