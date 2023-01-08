@@ -26,6 +26,7 @@ const TimerScreen = ({ navigation }) => {
           <Button
             onPress={() => {
               // Here we will save the entry to the database
+              // @TODO: Add entry to context for now
               navigation.navigate("Home");
             }}
           >
@@ -33,7 +34,6 @@ const TimerScreen = ({ navigation }) => {
           </Button>
           <Button
             onPress={() => {
-              // Here we will save the entry to the database
               navigation.navigate("Home");
             }}
             className="mt-8"

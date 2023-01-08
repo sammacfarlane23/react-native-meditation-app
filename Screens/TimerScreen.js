@@ -1,61 +1,91 @@
 import { useState, useEffect } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 
 import Button from "../Components/Button";
 
 const TimerScreen = ({ navigation }) => {
-  const [isTimerActive, setIsTimerActive] = useState(false);
+  const [timerHasBegan, setTimerHasBegan] = useState(false);
+  const [timerIsRunning, setTimerIsRunning] = useState(false);
   const [timer, setTimer] = useState(60 * 30);
-  const [number, onChangeNumber] = useState(null);
 
   const minutes = Math.floor(timer / 60);
   const seconds = timer % 60;
 
   useEffect(() => {
-    if (isTimerActive) {
+    if (timerIsRunning) {
       const interval = setInterval(() => {
+        if (timer <= 0) {
+          navigation.navigate("Finish");
+          setTimer(60 * 30);
+          return;
+        }
         setTimer((timer) => timer - 1);
       }, 1000);
       return () => clearInterval(interval);
     }
-  });
+    if (timer === 0) {
+    }
+  }, [timerIsRunning, timer]);
 
   return (
     <View className="flex-1 items-center justify-center bg-gray-800 p-5">
-      <View className="pb-10">
-        <Text className="text-5xl text-white">{`${minutes
-          .toString()
-          .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}</Text>
-      </View>
+      {timerHasBegan && (
+        <View className="pb-10">
+          <Text className="text-5xl text-white">{`${minutes
+            .toString()
+            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}</Text>
+          {timerHasBegan && !timerIsRunning && (
+            <Text className="text-white text-lg text-center mt-4">Paused</Text>
+          )}
+        </View>
+      )}
 
-      {!isTimerActive && (
-        <View className="w-1/2 flex-row justify-center items-center">
-          <TextInput
-            className="w-1/3 px-2 border-2 text-black mb-6 border-gray-300 bg-white h-10 rounded-lg"
-            onChangeText={onChangeNumber}
-            value={number}
-            keyboardType="numeric"
-          />
-          <Text className="text-white ml-2">minutes</Text>
+      {!timerHasBegan && (
+        <View className="items-center mb-4">
+          <Text className="text-white text-xl">Select duration:</Text>
+          <View className="flex-row items-center">
+            <Picker
+              selectedValue={timer / 60}
+              onValueChange={(itemValue, itemIndex) => setTimer(itemValue * 60)}
+              style={{
+                height: 200,
+                width: 100,
+                backgroundColor: "rgb(31 41 55)",
+              }}
+              itemStyle={{ color: "white" }}
+            >
+              {[...Array(60).keys()].map((i) => (
+                <Picker.Item key={i} label={(i + 1).toString()} value={i + 1} />
+              ))}
+            </Picker>
+            <Text className="text-2xl text-white">Minutes</Text>
+          </View>
         </View>
       )}
 
       <View className="w-1/2">
         <Button
           className="mb-6"
-          onPress={() => setIsTimerActive(!isTimerActive)}
-        >
-          {isTimerActive ? "Pause" : "Start"}
-        </Button>
-
-        <Button
           onPress={() => {
-            setTimer(60 * 30);
-            setIsTimerActive(false);
+            if (!timerHasBegan) setTimerHasBegan(true);
+            setTimerIsRunning(!timerIsRunning);
           }}
         >
-          Reset
+          {timerIsRunning ? "Pause" : "Start"}
         </Button>
+
+        {timerHasBegan && (
+          <Button
+            onPress={() => {
+              setTimer(60 * 30);
+              setTimerIsRunning(false);
+              setTimerHasBegan(false);
+            }}
+          >
+            Reset
+          </Button>
+        )}
 
         <Button className="mt-20" onPress={() => navigation.navigate("Finish")}>
           Finish Screen
