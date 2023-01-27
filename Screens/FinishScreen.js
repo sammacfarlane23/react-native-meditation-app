@@ -1,18 +1,21 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import dayjs from "dayjs";
+import { View, Text, TextInput } from "react-native";
 
 import Button from "../Components/Button";
+import { useEntryContext } from "../context/entryContext";
 
-const TimerScreen = ({ navigation }) => {
+const TimerScreen = ({ navigation, route }) => {
   const [entryText, setEntryText] = useState(null);
+  const entryContext = useEntryContext();
 
   return (
     <View className="flex-1 items-center justify-between bg-gray-800 p-5">
       <View className="items-center">
-        <Text className="text-white text-center my-8 text-lg">
-          30 minutes completed! Well done!
+        <Text className="text-white text-center my-8 text-xl font-bold">
+          {route.params.duration} minutes completed! Well done!
         </Text>
-        <Text className="text-white text-center my-8 text-lg">
+        <Text className="text-white text-center my-8 text-xl font-bold">
           Now is your chance to journal the experience...
         </Text>
         <TextInput
@@ -25,8 +28,11 @@ const TimerScreen = ({ navigation }) => {
         <View className="w-1/2 my-8">
           <Button
             onPress={() => {
-              // Here we will save the entry to the database
-              // @TODO: Add entry to context for now
+              entryContext.addEntry({
+                date: dayjs(),
+                duration: route.params.duration,
+                text: entryText,
+              });
               navigation.navigate("Home");
             }}
           >
@@ -34,6 +40,11 @@ const TimerScreen = ({ navigation }) => {
           </Button>
           <Button
             onPress={() => {
+              entryContext.addEntry({
+                date: dayjs(),
+                duration: route.params.duration,
+                text: "",
+              });
               navigation.navigate("Home");
             }}
             className="mt-8"

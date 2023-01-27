@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import { EntryContext } from "../context/entryContext";
 
 import Button from "../Components/Button";
-import Card from "../Components/Card";
+import EntryCard from "../Components/EntryCard";
 
 const HomeScreen = ({ navigation }) => {
   const { entries } = useContext(EntryContext);
@@ -17,14 +17,8 @@ const HomeScreen = ({ navigation }) => {
         Begin meditation
       </Button>
 
-      {entries.map((entry) => (
-        <Card
-          key={entry.text}
-          title={entry.date}
-          text={entry.text}
-          duration={entry.duration}
-          type={entry?.type}
-        />
+      {entries.map(({ text, date, duration }) => (
+        <EntryCard key={text} {...{ text, date, duration }} />
       ))}
     </View>
   );
