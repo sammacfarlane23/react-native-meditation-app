@@ -7,6 +7,7 @@ import Button from "../Components/Button";
 const defaultMinutes = 30;
 
 const TimerScreen = ({ navigation }) => {
+  // @TODO - Can definitely derive some of these state values
   const [timerHasBegan, setTimerHasBegan] = useState(false);
   const [timerIsRunning, setTimerIsRunning] = useState(false);
   const [minutes, setMinutes] = useState(30);
@@ -23,7 +24,7 @@ const TimerScreen = ({ navigation }) => {
     if (timerIsRunning) {
       const interval = setInterval(() => {
         if (timer <= 0) {
-          navigation.navigate("Finish", { duration: minutes });
+          navigation.navigate("Finish", { duration: minutes * 60 });
           setTimerHasBegan(false);
           setTimerIsRunning(false);
           return;
@@ -95,14 +96,17 @@ const TimerScreen = ({ navigation }) => {
           </Button>
         )}
 
-        {/* @TODO Remove this, it's for testing only */}
         <Button
           className="mt-20"
-          onPress={() =>
-            navigation.navigate("Finish", { duration: minutes })
+          onPress={() => {
+            setTimer(minutes * 60);
+            setTimerIsRunning(false);
+            setTimerHasBegan(false);
+            navigation.navigate("Finish", { duration: minutes * 60 - timer })
+          }
           }
         >
-          Finish Screen
+          Finish
         </Button>
       </View>
     </View>

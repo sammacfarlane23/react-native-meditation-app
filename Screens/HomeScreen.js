@@ -11,7 +11,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View className="flex-1 items-center justify-center bg-gray-800 p-5">
       <Button
-        className="max-w-1/2"
+        className="max-w-1/2 mb-4"
         onPress={() => navigation.navigate("Timer")}
       >
         Begin meditation
