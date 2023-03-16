@@ -6,4 +6,4 @@ import relativeTime from "dayjs/plugin/relativeTime"
 dayjs.extend(duration)
 dayjs.extend(relativeTime)
 
-export const parseDuration = (duration) => capitalize(dayjs.duration(duration, "seconds").humanize())
+export const parseDuration = (duration: number) => capitalize(dayjs.duration(duration, "seconds").humanize())

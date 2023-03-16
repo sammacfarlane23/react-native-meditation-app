@@ -6,7 +6,13 @@ import TimerScreen from "./Screens/TimerScreen";
 import FinishScreen from "./Screens/FinishScreen";
 import { EntryContextProvider } from "./context/entryContext";
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  Home: undefined;
+  Timer: undefined;
+  Finish: { duration: number };
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
   return (

@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-import Button from "../Components/Button";
+import { RootStackParamList } from "../App";
+import Button from "../components/Button";
 
 const defaultMinutes = 30;
 
-const TimerScreen = ({ navigation }) => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Timer'>;
+
+const TimerScreen = ({ navigation }: Props) => {
   // @TODO - Can definitely derive some of these state values
   const [timerHasBegan, setTimerHasBegan] = useState(false);
   const [timerIsRunning, setTimerIsRunning] = useState(false);
@@ -102,9 +106,8 @@ const TimerScreen = ({ navigation }) => {
             setTimer(minutes * 60);
             setTimerIsRunning(false);
             setTimerHasBegan(false);
-            navigation.navigate("Finish", { duration: minutes * 60 - timer })
-          }
-          }
+            navigation.navigate("Finish", { duration: minutes * 60 - timer });
+          }}
         >
           Finish
         </Button>

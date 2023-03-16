@@ -1,21 +1,25 @@
 import { useState } from "react";
 import dayjs from "dayjs";
 import { View, Text, TextInput } from "react-native";
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { parseDuration } from "../utils";
-import Button from "../Components/Button";
+import Button from "../components/Button";
 import { useEntryContext } from "../context/entryContext";
+import { RootStackParamList } from "../App";
 
-const TimerScreen = ({ navigation, route }) => {
-  const [entryText, setEntryText] = useState(null);
+type Props = NativeStackScreenProps<RootStackParamList, 'Finish'>;
+
+const TimerScreen = ({ navigation, route }: Props) => {
+  const [entryText, setEntryText] = useState<string>('');
   const entryContext = useEntryContext();
+  const date = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
   return (
     <View className="flex-1 items-center justify-between bg-gray-800 p-5">
       <View className="items-center">
         <Text className="text-white text-center my-8 text-xl font-semibold">
-          {parseDuration(route.params.duration)} completed!
-          Well done!
+          {parseDuration(route.params.duration)} completed! Well done!
         </Text>
         <Text className="text-white text-center my-8 text-xl font-semibold">
           Now is your chance to journal the experience...
@@ -31,7 +35,7 @@ const TimerScreen = ({ navigation, route }) => {
           <Button
             onPress={() => {
               entryContext.addEntry({
-                date: dayjs(),
+                date,
                 duration: route.params.duration,
                 text: entryText,
               });
@@ -43,7 +47,7 @@ const TimerScreen = ({ navigation, route }) => {
           <Button
             onPress={() => {
               entryContext.addEntry({
-                date: dayjs(),
+                date,
                 duration: route.params.duration,
                 text: "",
               });

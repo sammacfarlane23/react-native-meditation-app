@@ -2,7 +2,13 @@ import { TouchableOpacity, Text } from "react-native";
 import React from "react";
 import classnames from "classnames";
 
-const Button = ({ children, onPress, className, ...rest }) => {
+type Props = {
+  children: React.ReactNode;
+  onPress: () => void;
+  className?: string;
+};
+
+const Button = ({ children, onPress, className, ...rest }: Props) => {
   return (
     <TouchableOpacity
       className={classnames(

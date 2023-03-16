@@ -1,8 +1,10 @@
 import { View, Text } from "react-native";
 import dayjs from "dayjs";
+
+import {Entry} from "../../context/entryContext";
 import { parseDuration } from "../../utils";
 
-const Card = ({ date, text, duration }) => (
+const Card = ({ date, text, duration }: Entry) => (
   <View className="m-4 min-w-full p-6 bg-white border border-gray-200 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
     <View className="flex-row justify-between items-center">
       <View className="flex-row items-center">

@@ -1,5 +1,11 @@
 import React, { createContext, useContext } from "react";
 
+export interface Entry {
+  date: string;
+  duration: number;
+  text: string;
+}
+
 const initialEntryState = {
   entries: [
     {
@@ -15,17 +21,28 @@ const initialEntryState = {
   ],
 };
 
-const entryContextWrapper = (component) => ({
+const entryContextWrapper = (component: any) => ({
   ...initialEntryState,
-  addEntry: (entry) => {
+  addEntry: (entry: Entry) => {
     initialEntryState.entries.push(entry);
     component?.setState({ context: entryContextWrapper(component) });
   },
 });
 
-export const EntryContext = createContext(entryContextWrapper());
+export const EntryContext = createContext(entryContextWrapper(null as any));
 
-export class EntryContextProvider extends React.Component {
+type EntryContextProviderProps = {
+  children: React.ReactNode;
+};
+
+type EntryContextProviderState = {
+  context: ReturnType<typeof entryContextWrapper>;
+};
+
+export class EntryContextProvider extends React.Component<
+  EntryContextProviderProps,
+  EntryContextProviderState
+> {
   state = {
     context: entryContextWrapper(this),
   };

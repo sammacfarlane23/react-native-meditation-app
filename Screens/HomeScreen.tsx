@@ -1,11 +1,15 @@
 import { useContext } from "react";
 import { View } from "react-native";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+
 import { EntryContext } from "../context/entryContext";
+import Button from "../components/Button";
+import EntryCard from "../components/EntryCard";
+import { RootStackParamList } from "../App";
 
-import Button from "../Components/Button";
-import EntryCard from "../Components/EntryCard";
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation }: Props) => {
   const { entries } = useContext(EntryContext);
 
   return (
