@@ -31,7 +31,7 @@ const TimerScreen = ({ navigation, route }: Props) => {
           value={entryText}
           placeholder="How did this session make you feel?"
         />
-        <View className="w-1/2 my-8">
+        <View className="w-1/2 my-2">
           <Button
             onPress={() => {
               entryContext.addEntry({
@@ -53,7 +53,7 @@ const TimerScreen = ({ navigation, route }: Props) => {
               });
               navigation.navigate("Home");
             }}
-            className="mt-8"
+            className="mt-4"
           >
             Skip
           </Button>
