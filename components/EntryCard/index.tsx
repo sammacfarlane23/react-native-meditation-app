@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import dayjs from "dayjs";
 
-import {Entry} from "../../context/entryContext";
+import { Entry } from "../../context/entryContext";
 import { parseDuration } from "../../utils";
 
 const Card = ({ date, text, duration }: Entry) => (
@@ -15,9 +15,16 @@ const Card = ({ date, text, duration }: Entry) => (
           {dayjs(date).format("HH:mm")}
         </Text>
       </View>
+      {/* @TODO - add a delete button */}
+      {/* @TODO - add a edit button */}
+      {/* @TODO - add a little clock icon to the left of the duration */}
       <Text className="ml-5">{parseDuration(duration)}</Text>
     </View>
-    {text && <Text className="font-normal my-2 text-gray-700 dark:text-gray-400">{text}</Text>}
+    {text && (
+      <Text className="font-normal my-2 text-gray-700 dark:text-gray-400">
+        {text}
+      </Text>
+    )}
   </View>
 );
 

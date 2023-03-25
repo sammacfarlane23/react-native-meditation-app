@@ -1,19 +1,23 @@
 import { useState } from "react";
 import dayjs from "dayjs";
 import { View, Text, TextInput } from "react-native";
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { parseDuration } from "../utils";
 import Button from "../components/Button";
-import { useEntryContext } from "../context/entryContext";
+import useEntries from "../context/entryContext";
 import { RootStackParamList } from "../App";
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Finish'>;
+type Props = NativeStackScreenProps<RootStackParamList, "Finish">;
 
 const TimerScreen = ({ navigation, route }: Props) => {
-  const [entryText, setEntryText] = useState<string>('');
-  const entryContext = useEntryContext();
+  const { addEntry } = useEntries();
+  const [entryText, setEntryText] = useState<string>("");
   const date = dayjs().format("YYYY-MM-DD HH:mm:ss");
+  // @TODO - use a better id generator
+  const id =
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15);
 
   return (
     <View className="flex-1 items-center justify-between bg-gray-800 p-5">
@@ -34,9 +38,10 @@ const TimerScreen = ({ navigation, route }: Props) => {
         <View className="w-1/2 my-2">
           <Button
             onPress={() => {
-              entryContext.addEntry({
+              addEntry({
                 date,
                 duration: route.params.duration,
+                id,
                 text: entryText,
               });
               navigation.navigate("Home");
@@ -46,9 +51,10 @@ const TimerScreen = ({ navigation, route }: Props) => {
           </Button>
           <Button
             onPress={() => {
-              entryContext.addEntry({
+              addEntry({
                 date,
                 duration: route.params.duration,
+                id,
                 text: "",
               });
               navigation.navigate("Home");

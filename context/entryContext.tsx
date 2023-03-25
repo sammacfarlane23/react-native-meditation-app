@@ -1,62 +1,61 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 
 export interface Entry {
   date: string;
   duration: number;
-  text: string;
+  id: string;
+  text?: string;
+}
+interface EntryContextType {
+  entries: Entry[];
+  addEntry: (entry: Entry) => void;
+  clearEntries: () => void;
+}
+interface EntryContextProviderProps {
+  children: React.ReactNode;
 }
 
-const initialEntryState = {
-  entries: [
-    {
-      date: "2021-08-01",
-      duration: 600,
-      text: "I felt great after this meditation",
-    },
-    {
-      date: "2021-08-04",
-      duration: 600,
-      text: "This meditation was a bit hit or miss but we move. Let's make this a long text to see how it looks",
-    },
-  ],
-};
-
-const entryContextWrapper = (component: any) => ({
-  ...initialEntryState,
-  addEntry: (entry: Entry) => {
-    initialEntryState.entries.push(entry);
-    component?.setState({ context: entryContextWrapper(component) });
-  },
+const EntryContext = createContext<EntryContextType>({
+  entries: [],
+  addEntry: () => {},
+  clearEntries: () => {},
 });
 
-export const EntryContext = createContext(entryContextWrapper(null as any));
+const EntryContextProvider = ({ children }: EntryContextProviderProps) => {
+  const [entries, setEntries] = useState<Entry[]>([]);
+  const { getItem, setItem } = useAsyncStorage("MEDITATION_APP::ENTRIES");
 
-type EntryContextProviderProps = {
-  children: React.ReactNode;
-};
-
-type EntryContextProviderState = {
-  context: ReturnType<typeof entryContextWrapper>;
-};
-
-export class EntryContextProvider extends React.Component<
-  EntryContextProviderProps,
-  EntryContextProviderState
-> {
-  state = {
-    context: entryContextWrapper(this),
+  const addEntry = (entry: Entry) => {
+    setEntries([...entries, entry]);
   };
 
-  render() {
-    return (
-      <EntryContext.Provider value={this.state.context}>
-        {this.props.children}
-      </EntryContext.Provider>
-    );
-  }
-}
+  const clearEntries = () => {
+    setEntries([]);
+  };
 
-export const useEntryContext = () => {
-  const entryContext = useContext(EntryContext);
-  return entryContext;
+  const readItemFromStorage = async () => {
+    const item = (await getItem()) || "[]";
+    setEntries(JSON.parse(item));
+  };
+
+  useEffect(() => {
+    readItemFromStorage();
+  }, []);
+
+  useEffect(() => {
+    setItem(JSON.stringify(entries));
+  }, [entries]);
+
+  return (
+    <EntryContext.Provider value={{ entries, addEntry, clearEntries }}>
+      {children}
+    </EntryContext.Provider>
+  );
 };
+
+const useEntries = () => useContext(EntryContext);
+
+export { EntryContext, EntryContextProvider };
+
+export default useEntries;
