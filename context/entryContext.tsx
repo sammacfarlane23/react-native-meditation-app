@@ -10,6 +10,8 @@ export interface Entry {
 interface EntryContextType {
   entries: Entry[];
   addEntry: (entry: Entry) => void;
+  updateEntry: (entry: Entry) => void;
+  removeEntry: (id: string) => void;
   clearEntries: () => void;
 }
 interface EntryContextProviderProps {
@@ -19,6 +21,8 @@ interface EntryContextProviderProps {
 const EntryContext = createContext<EntryContextType>({
   entries: [],
   addEntry: () => {},
+  updateEntry: () => {},
+  removeEntry: () => {},
   clearEntries: () => {},
 });
 
@@ -28,6 +32,21 @@ const EntryContextProvider = ({ children }: EntryContextProviderProps) => {
 
   const addEntry = (entry: Entry) => {
     setEntries([...entries, entry]);
+  };
+
+  const updateEntry = (entry: Entry) => {
+    setEntries(
+      entries.map((e) => {
+        if (e.id === entry.id) {
+          return entry;
+        }
+        return e;
+      })
+    );
+  };
+
+  const removeEntry = (id: string) => {
+    setEntries(entries.filter((entry) => entry.id !== id));
   };
 
   const clearEntries = () => {
@@ -48,7 +67,7 @@ const EntryContextProvider = ({ children }: EntryContextProviderProps) => {
   }, [entries]);
 
   return (
-    <EntryContext.Provider value={{ entries, addEntry, clearEntries }}>
+    <EntryContext.Provider value={{ entries, addEntry, updateEntry, removeEntry, clearEntries }}>
       {children}
     </EntryContext.Provider>
   );
