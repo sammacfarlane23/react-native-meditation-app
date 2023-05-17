@@ -12,7 +12,7 @@ const HomeScreen = ({ navigation }: Props) => {
   const { entries, clearEntries } = useEntries();
 
   return (
-    <View className="flex-1 items-center justify-center bg-gray-800 p-5 pt-20">
+    <View className="flex-1 items-center justify-center bg-black p-5 pt-20">
       <Button
         className="max-w-1/2 mb-4"
         onPress={() => {

@@ -11,9 +11,9 @@ import { RootStackParamList } from "../App";
 type Props = NativeStackScreenProps<RootStackParamList, "Edit">;
 
 const EditScreen = ({ navigation, route }: Props) => {
-  const { updateEntry } = useEntries();
+  const { updateEntry, removeEntry } = useEntries();
   const [entryText, setEntryText] = useState<string | undefined>("");
-  const { date, duration, text } = route.params.entry;
+  const { date, duration, text, id } = route.params.entry;
 
   useEffect(() => {
     setEntryText(text);
@@ -56,6 +56,12 @@ const EditScreen = ({ navigation, route }: Props) => {
             className="mt-4 bg-red-500"
           >
             Cancel
+          </Button>
+          <Button
+            onPress={() => removeEntry(id)}
+            className="bg-red-600 w-1/2 my-4"
+          >
+            Delete
           </Button>
         </View>
       </View>

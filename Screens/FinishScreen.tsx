@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { View, Text, TextInput } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-import { parseDuration } from "../utils";
+import { parseDate } from "../utils";
+import Duration from "../components/Duration";
 import Button from "../components/Button";
 import useEntries from "../context/entryContext";
 import { RootStackParamList } from "../App";
@@ -13,23 +14,25 @@ type Props = NativeStackScreenProps<RootStackParamList, "Finish">;
 const TimerScreen = ({ navigation, route }: Props) => {
   const { addEntry } = useEntries();
   const [entryText, setEntryText] = useState<string>("");
-  const date = dayjs().format("YYYY-MM-DD HH:mm:ss");
+  const [date, setDate] = useState<string>("");
   // @TODO - use a better id generator
   const id =
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15);
 
+  useEffect(() => {
+    setDate(dayjs().format("YYYY-MM-DD HH:mm:ss"));
+  }, []);
+
   return (
-    <View className="flex-1 items-center justify-between bg-gray-800 p-5">
+    <View className="flex-1 items-center justify-between bg-black p-5">
       <View className="items-center">
-        <Text className="text-white text-center my-8 text-xl font-semibold">
-          {parseDuration(route.params.duration)} completed! Well done!
+        <Text className="text-white my-4 self-start text-4xl font-semibold">
+          {parseDate(date)}{" "}
         </Text>
-        <Text className="text-white text-center my-8 text-xl font-semibold">
-          Now is your chance to journal the experience...
-        </Text>
+        <Duration duration={route.params.duration} />
         <TextInput
-          className="w-96 my-8 p-2 border-2 text-black border-gray-300 bg-white h-96 rounded-md"
+          className="w-96 my-8 px-3 py-3 text-black bg-gray-400 h-48 rounded-md"
           multiline={true}
           onChangeText={setEntryText}
           value={entryText}
