@@ -8,7 +8,7 @@ import Button from "../components/Button";
 
 const defaultMinutes = 30;
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Timer'>;
+type Props = NativeStackScreenProps<RootStackParamList, "Timer">;
 
 const TimerScreen = ({ navigation }: Props) => {
   // @TODO - Can definitely derive some of these state values
@@ -40,7 +40,7 @@ const TimerScreen = ({ navigation }: Props) => {
   }, [timerIsRunning, timer]);
 
   return (
-    <View className="flex-1 items-center justify-center bg-gray-800 p-5">
+    <View className="flex-1 items-center justify-center bg-black p-5">
       {timerHasBegan && (
         <View className="pb-10">
           <Text className="text-5xl text-white">{`${minutesLeft
@@ -89,28 +89,32 @@ const TimerScreen = ({ navigation }: Props) => {
         </Button>
 
         {timerHasBegan && (
-          <Button
-            onPress={() => {
-              setTimer(minutes * 60);
-              setTimerIsRunning(false);
-              setTimerHasBegan(false);
-            }}
-          >
-            Reset
-          </Button>
-        )}
+          <>
+            <Button
+              onPress={() => {
+                setTimer(minutes * 60);
+                setTimerIsRunning(false);
+                setTimerHasBegan(false);
+              }}
+            >
+              Reset
+            </Button>
 
-        <Button
-          className="mt-20"
-          onPress={() => {
-            setTimer(minutes * 60);
-            setTimerIsRunning(false);
-            setTimerHasBegan(false);
-            navigation.navigate("Finish", { duration: minutes * 60 - timer });
-          }}
-        >
-          Finish
-        </Button>
+            <Button
+              className="mt-20"
+              onPress={() => {
+                setTimer(minutes * 60);
+                setTimerIsRunning(false);
+                setTimerHasBegan(false);
+                navigation.navigate("Finish", {
+                  duration: minutes * 60 - timer,
+                });
+              }}
+            >
+              Finish
+            </Button>
+          </>
+        )}
       </View>
     </View>
   );

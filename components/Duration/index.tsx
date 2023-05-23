@@ -6,16 +6,18 @@ import { parseDuration } from "../../utils";
 
 const Duration = ({
   duration,
+  iconColor = "white",
   className,
 }: {
   duration: number;
-  className: string;
+  iconColor?: string;
+  className?: string;
 }) => {
   return (
     <Text
       className={`text-white text-center self-start my-4 text-xl font-semibold ${className}`}
     >
-      <Feather name="clock" size={18} color="white" />
+      <Feather name="clock" size={18} color={iconColor} />
       {parseDuration(duration)}
     </Text>
   );

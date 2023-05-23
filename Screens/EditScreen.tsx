@@ -20,7 +20,7 @@ const EditScreen = ({ navigation, route }: Props) => {
   }, []);
 
   return (
-    <View className="flex-1 items-center justify-between bg-gray-800 p-5">
+    <View className="flex-1 items-center justify-between bg-black p-5">
       <View className="items-center">
         <Text className="text-white text-center my-8 text-xl font-semibold">
           {parseDuration(duration)}

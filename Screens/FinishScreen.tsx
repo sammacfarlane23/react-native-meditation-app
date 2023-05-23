@@ -32,14 +32,15 @@ const TimerScreen = ({ navigation, route }: Props) => {
         </Text>
         <Duration duration={route.params.duration} />
         <TextInput
-          className="w-96 my-8 px-3 py-3 text-black bg-gray-400 h-48 rounded-md"
+          className="w-96 my-8 px-3 py-3 text-black bg-gray-300 h-48 rounded-md"
           multiline={true}
           onChangeText={setEntryText}
           value={entryText}
           placeholder="How did this session make you feel?"
         />
         <View className="w-1/2 my-2">
-          <Button
+          {/* @TODO - send them to a "Well done" screen */}
+          {entryText && <Button
             onPress={() => {
               addEntry({
                 date,
@@ -51,7 +52,7 @@ const TimerScreen = ({ navigation, route }: Props) => {
             }}
           >
             Submit Entry
-          </Button>
+          </Button>}
           <Button
             onPress={() => {
               addEntry({

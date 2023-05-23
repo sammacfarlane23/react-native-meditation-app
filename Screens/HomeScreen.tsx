@@ -1,5 +1,7 @@
 import { View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import dayjs from "dayjs";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import useEntries from "../context/entryContext";
 import Button from "../components/Button";
@@ -12,26 +14,33 @@ const HomeScreen = ({ navigation }: Props) => {
   const { entries, clearEntries } = useEntries();
 
   return (
-    <View className="flex-1 items-center justify-center bg-black p-5 pt-20">
-      <Button
-        className="max-w-1/2 mb-4"
-        onPress={() => {
-          navigation.navigate("Timer");
-        }}
-      >
-        Begin meditation
-      </Button>
+    <View className="flex-1 items-center justify-center bg-black px-2 pt-14">
+      <View className="w-1/3">
+        <Button
+          className="mb-4 rounded-3xl"
+          onPress={() => {
+            navigation.navigate("Timer");
+          }}
+        >
+          Start{" "}
+          <MaterialCommunityIcons name="meditation" size={24} color="black" />
+        </Button>
+      </View>
 
-      <Button
+      {/* <Button
         className="max-w-1/2 mb-4"
         onPress={() => {
           clearEntries();
         }}
       >
         Clear all entries
-      </Button>
+      </Button> */}
 
-      <EntryList entries={entries} />
+      <EntryList
+        entries={entries.sort((a, b) =>
+          dayjs(a.date).isAfter(dayjs(b.date)) ? -1 : 1
+        )}
+      />
     </View>
   );
 };
