@@ -14,7 +14,7 @@ const HomeScreen = ({ navigation }: Props) => {
   const { entries, clearEntries } = useEntries();
 
   return (
-    <View className="flex-1 items-center justify-center bg-black px-2 pt-14">
+    <View className="flex-1 items-center justify-start bg-black px-2 pt-8">
       <View className="w-1/3">
         <Button
           className="mb-4 rounded-3xl"

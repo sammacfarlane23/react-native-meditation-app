@@ -5,7 +5,7 @@ import EntryCard from "../EntryCard";
 
 const EntryList = ({ entries }: Entry[]) => {
   return (
-    <View className="pb-20 w-full">
+    <View className="pb-20 w-full h-full">
       <FlatList
         data={entries}
         renderItem={({ item }) => <EntryCard {...item} />}
