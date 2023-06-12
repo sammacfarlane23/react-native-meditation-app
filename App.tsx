@@ -1,11 +1,16 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NativeWindStyleSheet } from "nativewind";
 
 import HomeScreen from "./Screens/HomeScreen";
 import TimerScreen from "./Screens/TimerScreen";
 import FinishScreen from "./Screens/FinishScreen";
 import { Entry, EntryContextProvider } from "./context/entryContext";
 import EditScreen from "./Screens/EditScreen";
+
+NativeWindStyleSheet.setOutput({
+  default: "native",
+});
 
 export type RootStackParamList = {
   Home: undefined;
@@ -35,9 +40,6 @@ function App() {
           <Stack.Screen
             name="Home"
             component={HomeScreen}
-            options={{
-              title: "Welcome to the meditation app",
-            }}
           />
           <Stack.Screen name="Timer" component={TimerScreen} />
           <Stack.Screen name="Finish" component={FinishScreen} />

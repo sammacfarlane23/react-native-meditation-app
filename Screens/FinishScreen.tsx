@@ -27,6 +27,7 @@ const TimerScreen = ({ navigation, route }: Props) => {
   return (
     <View className="flex-1 items-center justify-between bg-black p-5">
       <View className="items-center">
+        {/* @TODO - Create a reusable form for here and EditScreen */}
         <Text className="text-white my-4 self-start text-4xl font-semibold">
           {parseDate(date)}{" "}
         </Text>

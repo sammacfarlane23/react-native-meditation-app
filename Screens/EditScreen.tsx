@@ -36,6 +36,7 @@ const EditScreen = ({ navigation, route }: Props) => {
           value={entryText}
           placeholder="How did this session make you feel?"
         />
+        {/* @TODO - Carry on with themeing, look at tailwind.config.js */}
         <View className="w-1/2 my-2">
           <Button
             onPress={() => {

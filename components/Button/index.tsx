@@ -6,9 +6,16 @@ type Props = {
   children: React.ReactNode;
   onPress: () => void;
   className?: string;
+  textClassName?: string;
 };
 
-const Button = ({ children, onPress, className, ...rest }: Props) => {
+const Button = ({
+  children,
+  onPress,
+  className,
+  textClassName,
+  ...rest
+}: Props) => {
   return (
     <TouchableOpacity
       className={classnames(
@@ -18,7 +25,9 @@ const Button = ({ children, onPress, className, ...rest }: Props) => {
       {...{ onPress }}
       {...rest}
     >
-      <Text className="text-lg text-center font-semibold">{children}</Text>
+      <Text className={`text-lg text-center font-semibold ${textClassName}`}>
+        {children}
+      </Text>
     </TouchableOpacity>
   );
 };

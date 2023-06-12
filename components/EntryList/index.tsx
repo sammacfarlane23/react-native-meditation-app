@@ -5,8 +5,9 @@ import EntryCard from "../EntryCard";
 
 const EntryList = ({ entries }: Entry[]) => {
   return (
-    <View className="pb-20 w-full h-full">
+    <View className="w-full h-full">
       <FlatList
+        contentContainerStyle={{ paddingBottom: 100 }}
         data={entries}
         renderItem={({ item }) => <EntryCard {...item} />}
         keyExtractor={(item) => item.id}

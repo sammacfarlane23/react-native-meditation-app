@@ -14,16 +14,22 @@ const HomeScreen = ({ navigation }: Props) => {
   const { entries, clearEntries } = useEntries();
 
   return (
-    <View className="flex-1 items-center justify-start bg-black px-2 pt-8">
-      <View className="w-1/3">
+    <View className="flex-1 h-full items-center justify-start bg-black px-2 pt-8">
+      <EntryList
+        entries={entries.sort((a, b) =>
+          dayjs(a.date).isAfter(dayjs(b.date)) ? -1 : 1
+        )}
+      />
+      <View className="absolute bottom-16" style={{width: 160}}>
         <Button
-          className="mb-4 rounded-3xl"
+          className="rounded-full w-full h-full flex items-center justify-center py-3 bg-red"
+          textClassName="text-3xl"
           onPress={() => {
             navigation.navigate("Timer");
           }}
         >
           Start{" "}
-          <MaterialCommunityIcons name="meditation" size={24} color="black" />
+          <MaterialCommunityIcons name="meditation" size={32} color="black" />
         </Button>
       </View>
 
@@ -35,12 +41,6 @@ const HomeScreen = ({ navigation }: Props) => {
       >
         Clear all entries
       </Button> */}
-
-      <EntryList
-        entries={entries.sort((a, b) =>
-          dayjs(a.date).isAfter(dayjs(b.date)) ? -1 : 1
-        )}
-      />
     </View>
   );
 };
