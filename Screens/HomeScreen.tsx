@@ -14,7 +14,7 @@ const HomeScreen = ({ navigation }: Props) => {
   const { entries, clearEntries } = useEntries();
 
   return (
-    <View className="flex-1 h-full items-center justify-start bg-black px-2 pt-8">
+    <View className="flex-1 h-full items-center bg-dark-gray justify-start px-2 pt-8">
       <EntryList
         entries={entries.sort((a, b) =>
           dayjs(a.date).isAfter(dayjs(b.date)) ? -1 : 1

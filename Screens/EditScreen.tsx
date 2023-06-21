@@ -22,15 +22,15 @@ const EditScreen = ({ navigation, route }: Props) => {
   return (
     <View className="flex-1 items-center justify-between bg-black p-5">
       <View className="items-center">
-        <Text className="text-white text-center my-8 text-xl font-semibold">
+        <Text className="text-off-white text-center my-8 text-xl font-semibold">
           {parseDuration(duration)}
         </Text>
-        <Text className="mb-2 text-2xl font-bold tracking-tight text-white">
+        <Text className="mb-2 text-2xl font-bold tracking-tight text-off-white">
           {dayjs(date).format("DD/MM/YYYY")}{" "}
         </Text>
-        <Text className="text-white">{dayjs(date).format("HH:mm")}</Text>
+        <Text className="text-off-white">{dayjs(date).format("HH:mm")}</Text>
         <TextInput
-          className="w-96 my-8 p-2 border-2 text-black border-gray-300 bg-white h-96 rounded-md"
+          className="w-96 my-8 p-2 border-2 text-black border-gray-300 bg-french-gray h-96 rounded-md"
           multiline={true}
           onChangeText={setEntryText}
           value={entryText}

@@ -12,7 +12,7 @@ const Card = ({ date, text, duration, id }: Entry) => {
   return (
     <TouchableOpacity
       onPress={() => navigate("Edit", { entry: { date, text, duration, id } })}
-      className="m-4 max-w-full p-6 bg-gray-900 border rounded-lg shadow-md"
+      className="m-4 max-w-full p-6 bg-medium-gray border rounded-lg shadow-md"
     >
       <Text className="text-3xl font-bold tracking-tight text-off-white">
         {parseDate(date)}
