@@ -20,17 +20,19 @@ const EditScreen = ({ navigation, route }: Props) => {
   }, []);
 
   return (
-    <View className="flex-1 items-center justify-between bg-black p-5">
+    <View className="flex-1 items-center justify-between bg-alabaster dark:bg-black p-5">
       <View className="items-center">
-        <Text className="text-off-white text-center my-8 text-xl font-semibold">
+        <Text className="text-raisin-black dark:text-off-white text-center my-8 text-xl font-semibold">
           {parseDuration(duration)}
         </Text>
-        <Text className="mb-2 text-2xl font-bold tracking-tight text-off-white">
+        <Text className="mb-2 text-2xl font-bold tracking-tight text-raisin-black dark:text-off-white">
           {dayjs(date).format("DD/MM/YYYY")}{" "}
         </Text>
-        <Text className="text-off-white">{dayjs(date).format("HH:mm")}</Text>
+        <Text className="text-raisin-black dark:text-off-white">
+          {dayjs(date).format("HH:mm")}
+        </Text>
         <TextInput
-          className="w-96 my-8 p-2 border-2 text-black border-gray-300 bg-french-gray h-96 rounded-md"
+          className="w-96 my-8 p-2 text-off-white dark:text-black border-gray-300 bg-taupe-gray dark:bg-french-gray h-96 rounded-md"
           multiline={true}
           onChangeText={setEntryText}
           value={entryText}
@@ -46,7 +48,8 @@ const EditScreen = ({ navigation, route }: Props) => {
               });
               navigation.navigate("Home");
             }}
-            className="mt-4"
+            className="mt-4 dark:bg-green"
+            textClassName="text-off-white"
           >
             Finished
           </Button>
@@ -54,7 +57,7 @@ const EditScreen = ({ navigation, route }: Props) => {
             onPress={() => {
               navigation.navigate("Home");
             }}
-            className="mt-4 bg-red-500"
+            className="mt-4 dark:bg-red"
           >
             Cancel
           </Button>

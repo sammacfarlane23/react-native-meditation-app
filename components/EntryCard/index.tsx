@@ -5,20 +5,27 @@ import { useNavigation } from "@react-navigation/native";
 import { Entry } from "../../context/entryContext";
 import Duration from "../Duration";
 import { parseDuration, parseDate } from "../../utils";
+import colors from "../../constants/colors";
+import { useIsLightMode } from "../../hooks";
 
 const Card = ({ date, text, duration, id }: Entry) => {
   const { navigate } = useNavigation();
+  const isLightMode = useIsLightMode();
 
   return (
     <TouchableOpacity
       onPress={() => navigate("Edit", { entry: { date, text, duration, id } })}
-      className="m-4 max-w-full p-6 bg-medium-gray border rounded-lg shadow-md"
+      className="m-4 max-w-full p-6 bg-taupe-gray dark:bg-medium-gray rounded-lg shadow-md"
     >
       <Text className="text-3xl font-bold tracking-tight text-off-white">
         {parseDate(date)}
       </Text>
 
-      <Duration duration={duration} iconColor="#0F7173" className="text-sm text-off-white" />
+      <Duration
+        duration={duration}
+        iconColor={isLightMode ? colors["raisin-black"] : colors.green}
+        className="text-sm text-off-white"
+      />
 
       {text && (
         <Text className="font-normal text-md mb-2 mt-6 text-french-gray">

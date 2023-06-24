@@ -1,14 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NativeWindStyleSheet } from "nativewind";
+import { NativeWindStyleSheet, useColorScheme } from "nativewind";
 
 import HomeScreen from "./Screens/HomeScreen";
 import TimerScreen from "./Screens/TimerScreen";
 import FinishScreen from "./Screens/FinishScreen";
 import { Entry, EntryContextProvider } from "./context/entryContext";
 import EditScreen from "./Screens/EditScreen";
-import { Text, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import Header from "./components/Header";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
@@ -23,35 +22,29 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const HeaderTitle = () => {
-  return (
-    <View className="flex flex-row justify-between w-full pr-8">
-      <Feather name="arrow-left" size={24} color="white" />
-      <Feather name="menu" size={24} color="white" />
-    </View>
-  );
-};
-
 function App() {
+  const { colorScheme } = useColorScheme();
+
   return (
     <EntryContextProvider>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
-              backgroundColor: "#030712",
+              backgroundColor: colorScheme === "light" ? "#E8EBE4" : "#030712",
             },
             headerTintColor: "#E7ECEF",
             headerTitleStyle: {
               fontWeight: "bold",
               fontSize: 20,
             },
+            headerTitle: (props) => <Header {...props} />,
           }}
         >
           <Stack.Screen
             name="Home"
             component={HomeScreen}
-            options={{ headerTitle: (props) => <HeaderTitle {...props} /> }}
+            options={{ headerTitle: (props) => <Header {...props} /> }}
           />
           <Stack.Screen name="Timer" component={TimerScreen} />
           <Stack.Screen name="Finish" component={FinishScreen} />

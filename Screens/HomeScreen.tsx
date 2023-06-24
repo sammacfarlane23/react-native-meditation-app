@@ -7,29 +7,39 @@ import useEntries from "../context/entryContext";
 import Button from "../components/Button";
 import { RootStackParamList } from "../App";
 import EntryList from "../components/EntryList";
+import { useIsLightMode } from "../hooks";
+import * as colors from "../constants/colors";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const HomeScreen = ({ navigation }: Props) => {
   const { entries, clearEntries } = useEntries();
 
+  const isLightMode = useIsLightMode();
+
+  console.log({ alabaster: colors.alabaster });
+
   return (
-    <View className="flex-1 h-full items-center bg-dark-gray justify-start px-2 pt-8">
+    <View className="flex-1 h-full items-center bg-alabaster dark:bg-dark-gray justify-start px-2 pt-8">
       <EntryList
         entries={entries.sort((a, b) =>
           dayjs(a.date).isAfter(dayjs(b.date)) ? -1 : 1
         )}
       />
-      <View className="absolute bottom-16" style={{width: 160}}>
+      <View className="absolute bottom-16" style={{ width: 160 }}>
         <Button
-          className="rounded-full w-full h-full flex items-center justify-center py-3 bg-red"
-          textClassName="text-3xl"
+          className="rounded-full w-full h-full flex items-center justify-center py-3 bg-myrtle-green dark:bg-red"
+          textClassName="text-3xl text-alabaster dark:text-black"
           onPress={() => {
             navigation.navigate("Timer");
           }}
         >
           Start{" "}
-          <MaterialCommunityIcons name="meditation" size={32} color="black" />
+          <MaterialCommunityIcons
+            name="meditation"
+            size={32}
+            color={isLightMode ? colors.alabaster : "black"}
+          />
         </Button>
       </View>
 
