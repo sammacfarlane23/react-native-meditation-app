@@ -11,5 +11,6 @@ module.exports = {
   "raisin-black": "#1E212B",
   "taupe-gray": "#91818A",
   "myrtle-green": "#3C787E",
+  "imperial-red": "#FF4242",
 };
 

@@ -48,8 +48,8 @@ const EditScreen = ({ navigation, route }: Props) => {
               });
               navigation.navigate("Home");
             }}
-            className="mt-4 dark:bg-green"
-            textClassName="text-off-white"
+            className="mt-4 bg-french-gray dark:bg-green"
+            textClassName="text-rainsin-black dark:jtext-off-white"
           >
             Finished
           </Button>
@@ -57,13 +57,13 @@ const EditScreen = ({ navigation, route }: Props) => {
             onPress={() => {
               navigation.navigate("Home");
             }}
-            className="mt-4 dark:bg-red"
+            className="mt-4 bg-imperial-red dark:bg-red"
           >
             Cancel
           </Button>
           <Button
             onPress={() => removeEntry(id)}
-            className="bg-red-600 w-1/2 my-4"
+            className="bg-red-600 w-1/2 my-4 bg-red"
           >
             Delete
           </Button>
