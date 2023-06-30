@@ -39,13 +39,10 @@ function App() {
               fontSize: 20,
             },
             headerTitle: (props) => <Header {...props} />,
+            headerBackVisible: false,
           }}
         >
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{ headerTitle: (props) => <Header {...props} /> }}
-          />
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Timer" component={TimerScreen} />
           <Stack.Screen name="Finish" component={FinishScreen} />
           <Stack.Screen name="Edit" component={EditScreen} />

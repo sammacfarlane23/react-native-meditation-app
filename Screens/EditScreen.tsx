@@ -7,6 +7,8 @@ import { parseDuration } from "../utils";
 import Button from "../components/Button";
 import useEntries from "../context/entryContext";
 import { RootStackParamList } from "../App";
+import { useIsLightMode } from "../hooks";
+const colors = require("../constants/colors");
 
 type Props = NativeStackScreenProps<RootStackParamList, "Edit">;
 
@@ -36,6 +38,9 @@ const EditScreen = ({ navigation, route }: Props) => {
           multiline={true}
           onChangeText={setEntryText}
           value={entryText}
+          placeholderTextColor={
+            useIsLightMode() ? colors["white"] : colors["raisin-black"]
+          }
           placeholder="How did this session make you feel?"
         />
         {/* @TODO - Carry on with themeing, look at tailwind.config.js */}

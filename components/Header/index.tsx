@@ -1,38 +1,48 @@
 import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import { styled, useColorScheme } from "nativewind";
+import { useColorScheme } from "nativewind";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-import colors from "../../constants/colors";
+const colors = require("../../constants/colors");
 
 const Header = ({
   children,
   tintColor,
 }: {
   children: string;
-  tintColor?: string | undefined;
+  tintColor?: string;
 }) => {
-  const { colorScheme, toggleColorScheme } = useColorScheme();
   const navigation = useNavigation();
+  const { toggleColorScheme, colorScheme } = useColorScheme();
 
-  console.log({ children });
+  const isLightMode = colorScheme === "light";
 
   return (
     <View className="flex flex-row justify-between w-full pr-8">
-      {children !== "Home" && (
+      {children === "Home" ? (
+        <Text className="text-raisin-black dark:text-off-white text-2xl font-bold">
+          Meditation ME
+        </Text>
+      ) : (
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Feather name="arrow-left" size={24} color={colors["raisin-black"]} />
+          <Feather
+            name="arrow-left"
+            size={24}
+            color={isLightMode ? colors["raisin-black"] : colors["off-white"]}
+          />
         </TouchableOpacity>
       )}
-      <Text className="text-raisin-black dark:text-off-white text-2xl font-bold">
-        {children === "Home" ? "Meditation ME" : children}
-      </Text>
+      {children !== "Home" && (
+        <Text className="text-raisin-black dark:text-off-white text-2xl font-bold">
+          {children}
+        </Text>
+      )}
       <TouchableOpacity onPress={toggleColorScheme}>
-        {colorScheme === "light" ? (
-          <Feather name="moon" size={24} color="black" />
+        {isLightMode ? (
+          <Feather name="moon" size={24} color={colors["raisin-black"]} />
         ) : (
-          <Feather name="sun" size={24} color="white" />
+          <Feather name="sun" size={24} color={colors["off-white"]} />
         )}
       </TouchableOpacity>
     </View>
