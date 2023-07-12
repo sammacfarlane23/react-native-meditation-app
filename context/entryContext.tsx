@@ -67,7 +67,9 @@ const EntryContextProvider = ({ children }: EntryContextProviderProps) => {
   }, [entries]);
 
   return (
-    <EntryContext.Provider value={{ entries, addEntry, updateEntry, removeEntry, clearEntries }}>
+    <EntryContext.Provider
+      value={{ entries, addEntry, updateEntry, removeEntry, clearEntries }}
+    >
       {children}
     </EntryContext.Provider>
   );

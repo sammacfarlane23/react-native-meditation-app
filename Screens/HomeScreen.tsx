@@ -13,11 +13,9 @@ import * as colors from "../constants/colors";
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const HomeScreen = ({ navigation }: Props) => {
-  const { entries, clearEntries } = useEntries();
+  const { entries } = useEntries();
 
   const isLightMode = useIsLightMode();
-
-  console.log({ alabaster: colors.alabaster });
 
   return (
     <View className="flex-1 h-full items-center bg-alabaster dark:bg-dark-gray justify-start px-2 pt-8">

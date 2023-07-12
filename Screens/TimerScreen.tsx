@@ -13,11 +13,10 @@ const defaultMinutes = 30;
 type Props = NativeStackScreenProps<RootStackParamList, "Timer">;
 
 const TimerScreen = ({ navigation }: Props) => {
-  // @TODO - Can definitely derive some of these state values
-  const [timerHasBegan, setTimerHasBegan] = useState(false);
   const [timerIsRunning, setTimerIsRunning] = useState(false);
   const [minutes, setMinutes] = useState(30);
   const [timer, setTimer] = useState(60 * minutes);
+  const timerHasBegan = timerIsRunning || timer < 60 * minutes;
 
   useEffect(() => {
     setTimer(60 * minutes);
@@ -31,7 +30,6 @@ const TimerScreen = ({ navigation }: Props) => {
       const interval = setInterval(() => {
         if (timer <= 0) {
           navigation.navigate("Finish", { duration: minutes * 60 });
-          setTimerHasBegan(false);
           setTimerIsRunning(false);
           return;
         }
@@ -93,7 +91,6 @@ const TimerScreen = ({ navigation }: Props) => {
         <Button
           className="mb-6"
           onPress={() => {
-            if (!timerHasBegan) setTimerHasBegan(true);
             setTimerIsRunning(!timerIsRunning);
           }}
         >
@@ -106,7 +103,6 @@ const TimerScreen = ({ navigation }: Props) => {
               onPress={() => {
                 setTimer(minutes * 60);
                 setTimerIsRunning(false);
-                setTimerHasBegan(false);
               }}
             >
               Reset
@@ -117,7 +113,6 @@ const TimerScreen = ({ navigation }: Props) => {
               onPress={() => {
                 setTimer(minutes * 60);
                 setTimerIsRunning(false);
-                setTimerHasBegan(false);
                 navigation.navigate("Finish", {
                   duration: minutes * 60 - timer,
                 });

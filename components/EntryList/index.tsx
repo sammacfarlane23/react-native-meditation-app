@@ -3,7 +3,7 @@ import React from "react";
 import { Entry } from "../../context/entryContext";
 import EntryCard from "../EntryCard";
 
-const EntryList = ({ entries }: Entry[]) => {
+const EntryList = ({ entries }: { entries: Entry[] }) => {
   return (
     <View className="w-full h-full">
       <FlatList
