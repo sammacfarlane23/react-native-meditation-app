@@ -8,7 +8,8 @@ import Button from "../components/Button";
 import { RootStackParamList } from "../App";
 import EntryList from "../components/EntryList";
 import { useIsLightMode } from "../hooks";
-import * as colors from "../constants/colors";
+import Confetti from "../components/Confetti";
+const colors = require("../constants/colors");
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -17,13 +18,15 @@ const HomeScreen = ({ navigation }: Props) => {
 
   const isLightMode = useIsLightMode();
 
+  const sortedEntries = entries.sort((a, b) =>
+    dayjs(a.date).isAfter(dayjs(b.date)) ? -1 : 1
+  );
+
   return (
     <View className="flex-1 h-full items-center bg-alabaster dark:bg-dark-gray justify-start px-2 pt-8">
-      <EntryList
-        entries={entries.sort((a, b) =>
-          dayjs(a.date).isAfter(dayjs(b.date)) ? -1 : 1
-        )}
-      />
+      {/* @TODO: Trigger this on new journal entry */}
+      <Confetti />
+      <EntryList entries={sortedEntries} />
       <View className="absolute bottom-16" style={{ width: 160 }}>
         <Button
           className="rounded-full w-full h-full flex items-center justify-center py-3 bg-myrtle-green dark:bg-red"
@@ -40,15 +43,6 @@ const HomeScreen = ({ navigation }: Props) => {
           />
         </Button>
       </View>
-
-      {/* <Button
-        className="max-w-1/2 mb-4"
-        onPress={() => {
-          clearEntries();
-        }}
-      >
-        Clear all entries
-      </Button> */}
     </View>
   );
 };
