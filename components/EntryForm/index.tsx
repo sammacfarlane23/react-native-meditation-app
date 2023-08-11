@@ -60,7 +60,6 @@ const EntryForm = ({
           onBlur={() => Keyboard.dismiss()}
         />
         <View className="w-1/2 my-2">
-          {/* @TODO - send them to a "Well done" screen */}
           {entryText && (
             <Button
               onPress={() => {
@@ -70,7 +69,7 @@ const EntryForm = ({
                   id,
                   text: entryText,
                 });
-                navigation.navigate("Home");
+                navigation.navigate("Home", { celebrate: true });
               }}
               className="bg-french-gray dark:bg-green"
             >
@@ -86,7 +85,7 @@ const EntryForm = ({
                   id,
                   text: "",
                 });
-                navigation.navigate("Home");
+                navigation.navigate("Home", { celebrate: true });
               }}
               className="mt-4 bg-french-gray"
             >
