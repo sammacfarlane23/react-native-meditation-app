@@ -1,18 +1,8 @@
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
-import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
-
+import Modal from "react-native-modal";
+import Animated, { BounceIn, FadeOut } from "react-native-reanimated";
 import Confetti from "../Confetti";
-
-const AnimatedText = () => {
-  return (
-    <Animated.View entering={BounceIn} exiting={BounceOut}>
-      <Text className="text-4xl font-bold dark:text-off-white">
-        Congratulations!
-      </Text>
-    </Animated.View>
-  );
-};
 
 const Celebration = () => {
   const [showText, setShowText] = useState<boolean>(true);
@@ -21,23 +11,38 @@ const Celebration = () => {
     setShowText(true);
     const timer = setTimeout(() => {
       setShowText(false);
-    }, 1000);
+    }, 3000);
     return () => clearTimeout(timer);
   }, []);
 
+  // if (!showText) return null;
+
   return (
-    <View className="z-50 w-100 absolute top-10">
-      {showText ? (
-        <AnimatedText />
-      ) : (
-        <View>
-          <Text className="text-4xl font-bold dark:text-off-white opacity-0">
+    <Modal
+      isVisible={showText}
+      backdropOpacity={0.3}
+      animationOut="fadeOut"
+      // animationOutTiming={500}
+      // transparent={true}
+      // className="z-50 absolute w-screen h-screen bg-black top-16"
+    >
+      <View className="z-50 absolute w-screen h-screen top-16 flex align-center">
+        {/* {showText ? ( */}
+        <Animated.View entering={BounceIn} exiting={FadeOut}>
+          <Text className="text-5xl font-bold dark:text-off-white text-center">
             Congratulations!
           </Text>
-        </View>
-      )}
+        </Animated.View>
+        {/* ) : ( */}
+        {/* <View>
+            <Text className="text-5xl font-bold dark:text-off-white">
+              Congratulations!
+            </Text>
+          </View>
+        )} */}
+      </View>
       <Confetti />
-    </View>
+    </Modal>
   );
 };
 

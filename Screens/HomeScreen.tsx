@@ -9,11 +9,14 @@ import { RootStackParamList } from "../App";
 import EntryList from "../components/EntryList";
 import { useIsLightMode } from "../hooks";
 import Celebration from "../components/Celebration";
+import Confetti from "../components/Confetti";
+import { useEffect, useState } from "react";
 const colors = require("../constants/colors");
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const HomeScreen = ({ navigation, route }: Props) => {
+  const [showCelebration, setShowCelebration] = useState<boolean>(true);
   const { entries } = useEntries();
 
   const isLightMode = useIsLightMode();
@@ -24,10 +27,16 @@ const HomeScreen = ({ navigation, route }: Props) => {
 
   const { celebrate } = route.params || { celebrate: false };
 
+  // @TODO: Get the trigger for this working
+  useEffect(() => {
+    if (celebrate) {
+      setShowCelebration(true);
+    }
+  }, [celebrate]);
+
   return (
     <View className="flex-1 h-full items-center bg-alabaster dark:bg-dark-gray justify-start px-2 pt-8">
-      {/* @TODO: Get this working properly */}
-      {celebrate && <Celebration />}
+      {showCelebration && <Celebration />}
       <EntryList entries={sortedEntries} />
       <View className="absolute bottom-16" style={{ width: 160 }}>
         <Button
