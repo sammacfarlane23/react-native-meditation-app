@@ -7,6 +7,7 @@ export interface Entry {
   id: string;
   text?: string;
 }
+
 interface EntryContextType {
   entries: Entry[];
   addEntry: (entry: Entry) => void;
@@ -14,6 +15,7 @@ interface EntryContextType {
   removeEntry: (id: string) => void;
   clearEntries: () => void;
 }
+
 interface EntryContextProviderProps {
   children: React.ReactNode;
 }
@@ -28,7 +30,7 @@ const EntryContext = createContext<EntryContextType>({
 
 const EntryContextProvider = ({ children }: EntryContextProviderProps) => {
   const [entries, setEntries] = useState<Entry[]>([]);
-  const { getItem, setItem } = useAsyncStorage("MEDITATION_APP::ENTRIES");
+  // const { getItem, setItem } = useAsyncStorage("MEDITATION_APP::ENTRIES");
 
   const addEntry = (entry: Entry) => {
     setEntries([...entries, entry]);
@@ -53,18 +55,23 @@ const EntryContextProvider = ({ children }: EntryContextProviderProps) => {
     setEntries([]);
   };
 
-  const readItemFromStorage = async () => {
-    const item = (await getItem()) || "[]";
-    setEntries(JSON.parse(item));
-  };
+  // const readItemFromStorage = async () => {
+  //   const item = (await getItem()) || "[]";
+  //   setEntries(JSON.parse(item));
+  // };
 
   useEffect(() => {
-    readItemFromStorage();
+    // readItemFromStorage();
+    fetch("http://localhost:5001/entries").then((res) => {
+      res.json().then((data) => {
+        setEntries(data);
+      });
+    });
   }, []);
 
-  useEffect(() => {
-    setItem(JSON.stringify(entries));
-  }, [entries]);
+  // useEffect(() => {
+  //   setItem(JSON.stringify(entries));
+  // }, [entries]);
 
   return (
     <EntryContext.Provider
