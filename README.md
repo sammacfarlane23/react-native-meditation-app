@@ -2,7 +2,9 @@
 
 I am building this app to combine the two simple functionalities of a meditation timer plus a journal to write about the experience.
 
-<img src="https://github.com/sammacfarlane23/react-native-meditation-app/assets/50931982/270b818f-3153-4a7e-8ed8-369c0806e814" width="150" alt="Meditation app screenshot" />
+<img src="https://github.com/sammacfarlane23/react-native-meditation-app/assets/50931982/270b818f-3153-4a7e-8ed8-369c0806e814" width="150" alt="Meditation app home screen" />
+<img src="https://github.com/sammacfarlane23/react-native-meditation-app/assets/50931982/b4ea4298-7abc-4cca-be34-a5bfe61e780e" width="150" alt="Meditation app journal screen" />
+
 
 ## Technologies
 
