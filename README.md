@@ -2,7 +2,7 @@
 
 I am building this app to combine the two simple functionalities of a meditation timer plus a journal to write about the experience.
 
-![Simulator Screenshot - iPhone 15 Pro Max - 2024-01-04 at 16 54 36](https://github.com/sammacfarlane23/react-native-meditation-app/assets/50931982/270b818f-3153-4a7e-8ed8-369c0806e814)
+<img src="https://github.com/sammacfarlane23/react-native-meditation-app/assets/50931982/270b818f-3153-4a7e-8ed8-369c0806e814" width="150" alt="Meditation app screenshot" />
 
 ## Technologies
 
