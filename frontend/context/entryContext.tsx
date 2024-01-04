@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { useAsyncStorage } from "@react-native-async-storage/async-storage";
+
+const API_URL = "http://localhost:5001";
 
 export interface Entry {
   date: string;
@@ -33,7 +34,21 @@ const EntryContextProvider = ({ children }: EntryContextProviderProps) => {
   // const { getItem, setItem } = useAsyncStorage("MEDITATION_APP::ENTRIES");
 
   const addEntry = (entry: Entry) => {
-    setEntries([...entries, entry]);
+    // Post call to /entries endpoint
+    fetch(`${API_URL}/entries`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(entry),
+    }).then((res) => {
+      fetch(`${API_URL}/entries`).then((res) => {
+        res.json().then((data) => {
+          setEntries(data);
+        });
+      });
+    });
+    console.log({ entries });
   };
 
   const updateEntry = (entry: Entry) => {
@@ -62,7 +77,7 @@ const EntryContextProvider = ({ children }: EntryContextProviderProps) => {
 
   useEffect(() => {
     // readItemFromStorage();
-    fetch("http://localhost:5001/entries").then((res) => {
+    fetch(`${API_URL}/entries`).then((res) => {
       res.json().then((data) => {
         setEntries(data);
       });

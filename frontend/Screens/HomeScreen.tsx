@@ -17,11 +17,11 @@ type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const HomeScreen = ({ navigation, route }: Props) => {
   const [showCelebration, setShowCelebration] = useState<boolean>(true);
-  const { entries } = useEntries();
+  const { entries, addEntry } = useEntries();
 
   const isLightMode = useIsLightMode();
 
-  const sortedEntries = entries.sort((a, b) =>
+  const sortedEntries = entries?.sort((a, b) =>
     dayjs(a.date).isAfter(dayjs(b.date)) ? -1 : 1
   );
 
@@ -36,6 +36,18 @@ const HomeScreen = ({ navigation, route }: Props) => {
 
   return (
     <View className="flex-1 h-full items-center bg-alabaster dark:bg-dark-gray justify-start px-2 pt-8">
+      <Button
+        onPress={() => {
+          addEntry({
+            date: dayjs().toISOString(),
+            duration: 0,
+            id: "test",
+            text: "test",
+          });
+        }}
+      >
+        Add
+      </Button>
       {showCelebration && <Celebration />}
       <EntryList entries={sortedEntries} />
       <View className="absolute bottom-16" style={{ width: 160 }}>
