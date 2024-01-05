@@ -31,8 +31,8 @@ const EntryContext = createContext<EntryContextType>({
 
 const EntryContextProvider = ({ children }: EntryContextProviderProps) => {
   const [entries, setEntries] = useState<Entry[]>([]);
-  // const { getItem, setItem } = useAsyncStorage("MEDITATION_APP::ENTRIES");
 
+  // @TODO: Implement more elegant API integration
   const addEntry = (entry: Entry) => {
     // Post call to /entries endpoint
     fetch(`${API_URL}/entries`, {
@@ -41,13 +41,7 @@ const EntryContextProvider = ({ children }: EntryContextProviderProps) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(entry),
-    }).then((res) => {
-      fetch(`${API_URL}/entries`).then((res) => {
-        res.json().then((data) => {
-          setEntries(data);
-        });
-      });
-    });
+    }).then((res) => {});
     console.log({ entries });
   };
 
@@ -70,23 +64,13 @@ const EntryContextProvider = ({ children }: EntryContextProviderProps) => {
     setEntries([]);
   };
 
-  // const readItemFromStorage = async () => {
-  //   const item = (await getItem()) || "[]";
-  //   setEntries(JSON.parse(item));
-  // };
-
   useEffect(() => {
-    // readItemFromStorage();
     fetch(`${API_URL}/entries`).then((res) => {
       res.json().then((data) => {
         setEntries(data);
       });
     });
   }, []);
-
-  // useEffect(() => {
-  //   setItem(JSON.stringify(entries));
-  // }, [entries]);
 
   return (
     <EntryContext.Provider
