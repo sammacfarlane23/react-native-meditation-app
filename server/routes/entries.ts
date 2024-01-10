@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
-import { validationResult, body, query, param } from "express-validator";
+import { validationResult, body, param } from "express-validator";
+import { ObjectId } from "mongodb";
 
 import getDB from "../db/connect";
-import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
@@ -30,7 +30,6 @@ router.post(
     if (errors.isEmpty()) {
       const newDocument = { text, duration, date };
       const result = await collection.insertOne(newDocument);
-      console.log("successfully added entry to db", { result });
       return res.send(result).status(204);
     }
     res.status(400).send({ errors: errors.array() });
@@ -40,14 +39,69 @@ router.post(
 // Delete an entry from the collection
 router.delete(
   "/:id",
-  // @TODO: Get this working...
-  [param("id", "id must be a valid ObjectId").custom((input) => console.log({input})).isMongoId()],
+  [param("id", "id must be a valid ObjectId").isMongoId()],
   async (req: Request, res: Response) => {
-    const collection = getDB().collection("posts");
+    const collection = getDB().collection("entries");
     const errors = validationResult(req);
 
+    const query = { _id: new ObjectId(req.params.id) };
+
     if (errors.isEmpty()) {
-      let result = await collection.deleteOne({ _id: new ObjectId(req.params.id) });
+      const result = await collection.deleteOne(query);
+      let message;
+      if (result.deletedCount === 1) {
+        message = "Successfully deleted one document.";
+      } else {
+        message = `No documents matched the id: ${req.params.id}. Deleted 0 documents.`;
+      }
+      return res.send({ status: message }).status(200);
+    }
+
+    res.status(400).send({ errors: errors.array() });
+  }
+);
+
+// Update an entry in the collection
+router.put(
+  "/:id",
+  [
+    param("id", "id must be a valid ObjectId").isMongoId(),
+    body("text", "Text must be string").isString(),
+  ],
+  async (req: Request, res: Response) => {
+    const collection = getDB().collection("entries");
+    const errors = validationResult(req);
+
+    const query = { _id: new ObjectId(req.params.id) };
+    const update = { $set: { ...req.body } };
+
+    if (errors.isEmpty()) {
+      const result = await collection.updateOne(query, update);
+      let message;
+      if (result.modifiedCount === 1) {
+        message = "Successfully updated one document.";
+      } else {
+        message = `No documents matched the id: ${req.params.id}. Updated 0 documents.`;
+      }
+      return res.send({ status: message }).status(200);
+    }
+
+    res.status(400).send({ errors: errors.array() });
+  }
+);
+
+// Get a single entry from the collection
+router.get(
+  "/:id",
+  [param("id", "id must be a valid ObjectId").isMongoId()],
+  async (req: Request, res: Response) => {
+    const collection = getDB().collection("entries");
+    const errors = validationResult(req);
+
+    const query = { _id: new ObjectId(req.params.id) };
+
+    if (errors.isEmpty()) {
+      const result = await collection.findOne(query);
       return res.send(result).status(200);
     }
 
