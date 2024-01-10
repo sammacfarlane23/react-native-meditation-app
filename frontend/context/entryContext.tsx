@@ -5,7 +5,7 @@ const API_URL = "http://localhost:5001";
 export interface Entry {
   date: string;
   duration: number;
-  id: string;
+  _id: string;
   text?: string;
 }
 

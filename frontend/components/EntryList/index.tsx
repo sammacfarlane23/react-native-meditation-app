@@ -10,7 +10,7 @@ const EntryList = ({ entries }: { entries: Entry[] }) => {
         contentContainerStyle={{ paddingBottom: 100 }}
         data={entries}
         renderItem={({ item }) => <EntryCard {...item} />}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id}
       />
     </View>
   );

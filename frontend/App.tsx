@@ -26,29 +26,29 @@ function App() {
   const { colorScheme } = useColorScheme();
 
   return (
-    <EntryContextProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: colorScheme === "light" ? "#E8EBE4" : "#030712",
-            },
-            headerTintColor: "#E7ECEF",
-            headerTitleStyle: {
-              fontWeight: "bold",
-              fontSize: 20,
-            },
-            headerTitle: (props) => <Header {...props} />,
-            headerBackVisible: false,
-          }}
-        >
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Timer" component={TimerScreen} />
-          <Stack.Screen name="Finish" component={FinishScreen} />
-          <Stack.Screen name="Edit" component={EditScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </EntryContextProvider>
+    // <EntryContextProvider>
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: colorScheme === "light" ? "#E8EBE4" : "#030712",
+          },
+          headerTintColor: "#E7ECEF",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontSize: 20,
+          },
+          headerTitle: (props) => <Header {...props} />,
+          headerBackVisible: false,
+        }}
+      >
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Timer" component={TimerScreen} />
+        <Stack.Screen name="Finish" component={FinishScreen} />
+        <Stack.Screen name="Edit" component={EditScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    // </EntryContextProvider>
   );
 }
 

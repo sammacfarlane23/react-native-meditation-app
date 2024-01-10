@@ -22,11 +22,11 @@ const EntryForm = ({
   handleRemove,
 }: {
   entry: Entry;
-  handleSubmit: (arg0: Entry) => void;
-  handleRemove?: (arg0: string) => void;
+  handleSubmit: (id: string, entry: Entry) => Promise<void>;
+  handleRemove?: (id: string) => Promise<void>;
 }) => {
   const [entryText, setEntryText] = useState<string | undefined>("");
-  const { date, duration, text, id } = entry || {};
+  const { date, duration, text, _id } = entry || {};
   const [entryDate, setEntryDate] = useState<string>(date);
 
   const navigation = useNavigation();
@@ -63,10 +63,7 @@ const EntryForm = ({
           {entryText && (
             <Button
               onPress={() => {
-                handleSubmit({
-                  date: entryDate,
-                  duration,
-                  id,
+                handleSubmit(_id, {
                   text: entryText,
                 });
                 navigation.navigate("Home", { celebrate: true });
@@ -79,10 +76,7 @@ const EntryForm = ({
           {!handleRemove && (
             <Button
               onPress={() => {
-                handleSubmit({
-                  date: entryDate,
-                  duration,
-                  id,
+                handleSubmit(_id, {
                   text: "",
                 });
                 navigation.navigate("Home", { celebrate: true });
@@ -95,7 +89,7 @@ const EntryForm = ({
           {handleRemove && (
             <Button
               onPress={() => {
-                handleRemove(id);
+                handleRemove(_id);
                 navigation.navigate("Home");
               }}
               className="bg-red-600 w-1/2 my-4 bg-red"
