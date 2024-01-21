@@ -1,9 +1,9 @@
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Foundation } from "@expo/vector-icons";
 
-import useEntries from "../context/entryContext";
 import Button from "../components/Button";
 import { RootStackParamList } from "../App";
 import EntryList from "../components/EntryList";
@@ -16,10 +16,13 @@ const colors = require("../constants/colors");
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
+// @TODO: Work out what has ruined the styling
 const HomeScreen = ({ navigation, route }: Props) => {
   const [showCelebration, setShowCelebration] = useState<boolean>(true);
   // const { entries, addEntry } = useEntries();
   const entries = useEntryStore((state) => state.entries);
+  const error = useEntryStore((state) => state.error);
+  const loading = useEntryStore((state) => state.loading);
   const getAllEntries = useEntryStore((state) => state.getAllEntries);
   const addEntry = useEntryStore((state) => state.addEntry);
 
@@ -46,15 +49,31 @@ const HomeScreen = ({ navigation, route }: Props) => {
           addEntry({
             date: dayjs().toISOString(),
             duration: 0,
-            id: "test",
             text: "test",
           });
         }}
       >
         Add
       </Button>
+      <Button className="mt-5 bg-transparent" onPress={() => getAllEntries()}>
+        <Foundation
+          name="refresh"
+          size={32}
+          color={isLightMode ? "black" : "white"}
+        />
+      </Button>
+      {!loading && error && (
+        <Text className="mt-5 text-lg font-bold text-black dark:text-off-white">
+          {error}
+        </Text>
+      )}
+      {loading && (
+        <Text className="mt-5 text-lg font-bold text-black dark:text-off-white">
+          Loading...
+        </Text>
+      )}
       {/* {showCelebration && <Celebration />} */}
-      <EntryList entries={sortedEntries} />
+      {!loading && !error && <EntryList entries={sortedEntries} />}
       <View className="absolute bottom-16" style={{ width: 160 }}>
         <Button
           className="rounded-full w-full h-full flex items-center justify-center py-3 bg-myrtle-green dark:bg-red"

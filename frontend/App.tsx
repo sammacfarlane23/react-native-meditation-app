@@ -2,11 +2,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeWindStyleSheet, useColorScheme } from "nativewind";
 
-import HomeScreen from "./Screens/HomeScreen";
-import TimerScreen from "./Screens/TimerScreen";
-import FinishScreen from "./Screens/FinishScreen";
-import { Entry, EntryContextProvider } from "./context/entryContext";
-import EditScreen from "./Screens/EditScreen";
+import HomeScreen from "./screens/HomeScreen";
+import TimerScreen from "./screens/TimerScreen";
+import FinishScreen from "./screens/FinishScreen";
+import Entry from "./types/entry";
+import EditScreen from "./screens/EditScreen";
 import Header from "./components/Header";
 
 NativeWindStyleSheet.setOutput({
@@ -26,7 +26,6 @@ function App() {
   const { colorScheme } = useColorScheme();
 
   return (
-    // <EntryContextProvider>
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
@@ -48,7 +47,6 @@ function App() {
         <Stack.Screen name="Edit" component={EditScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-    // </EntryContextProvider>
   );
 }
 

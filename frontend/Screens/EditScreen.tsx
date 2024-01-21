@@ -3,7 +3,6 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { RootStackParamList } from "../App";
 import EntryForm from "../components/EntryForm";
-import useEntries from "../context/entryContext";
 import useEntryStore from "../stores/entryStore";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Edit">;
@@ -12,6 +11,7 @@ const EditScreen = ({ route }: Props) => {
   const deleteEntry = useEntryStore((state) => state.deleteEntry);
   const updateEntry = useEntryStore((state) => state.updateEntry);
   const { date, duration, text, _id } = route.params.entry;
+  console.log({ date, duration, text, _id });
 
   return (
     <View className="flex-1 items-center justify-between bg-alabaster dark:bg-black p-5">

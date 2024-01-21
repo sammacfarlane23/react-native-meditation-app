@@ -7,13 +7,14 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import dayjs from "dayjs";
 
 import { parseDate } from "../../utils";
-import { Entry } from "../../context/entryContext";
-import dayjs from "dayjs";
+import Entry from "../../types/entry";
 import Duration from "../Duration";
 import { useIsLightMode } from "../../hooks";
 import Button from "../Button";
+import useEntryStore from "../../stores/entryStore";
 const colors = require("../../constants/colors");
 
 const EntryForm = ({
@@ -22,9 +23,12 @@ const EntryForm = ({
   handleRemove,
 }: {
   entry: Entry;
-  handleSubmit: (id: string, entry: Entry) => Promise<void>;
+  handleSubmit:
+    | ((id: string, entry: Entry) => Promise<void>)
+    | ((entry: Entry) => Promise<void>);
   handleRemove?: (id: string) => Promise<void>;
 }) => {
+  const getAllEntries = useEntryStore((state) => state.getAllEntries);
   const [entryText, setEntryText] = useState<string | undefined>("");
   const { date, duration, text, _id } = entry || {};
   const [entryDate, setEntryDate] = useState<string>(date);
@@ -63,9 +67,13 @@ const EntryForm = ({
           {entryText && (
             <Button
               onPress={() => {
-                handleSubmit(_id, {
-                  text: entryText,
-                });
+                _id
+                  ? handleSubmit(_id, { text: entryText })
+                  : handleSubmit({
+                      text: entryText,
+                      date: entryDate,
+                      duration,
+                    });
                 navigation.navigate("Home", { celebrate: true });
               }}
               className="bg-french-gray dark:bg-green"
@@ -86,11 +94,12 @@ const EntryForm = ({
               Skip journaling
             </Button>
           )}
-          {handleRemove && (
+          {handleRemove && _id && (
             <Button
               onPress={() => {
                 handleRemove(_id);
                 navigation.navigate("Home");
+                getAllEntries();
               }}
               className="bg-red-600 w-1/2 my-4 bg-red"
             >

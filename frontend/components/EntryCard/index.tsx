@@ -2,19 +2,19 @@ import { View, Text, TouchableOpacity } from "react-native";
 import dayjs from "dayjs";
 import { useNavigation } from "@react-navigation/native";
 
-import { Entry } from "../../context/entryContext";
+import Entry from "../../types/entry";
 import Duration from "../Duration";
 import { parseDuration, parseDate } from "../../utils";
 import colors from "../../constants/colors";
 import { useIsLightMode } from "../../hooks";
 
-const Card = ({ date, text, duration, id }: Entry) => {
+const Card = ({ date, text, duration, _id }: Entry) => {
   const { navigate } = useNavigation();
   const isLightMode = useIsLightMode();
 
   return (
     <TouchableOpacity
-      onPress={() => navigate("Edit", { entry: { date, text, duration, id } })}
+      onPress={() => navigate("Edit", { entry: { date, text, duration, _id } })}
       className="m-4 max-w-full p-6 bg-taupe-gray dark:bg-medium-gray rounded-lg shadow-md"
     >
       <Text className="text-3xl font-bold tracking-tight text-off-white">

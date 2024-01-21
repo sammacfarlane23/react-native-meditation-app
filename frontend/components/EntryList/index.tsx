@@ -1,6 +1,6 @@
 import { View, FlatList } from "react-native";
 import React from "react";
-import { Entry } from "../../context/entryContext";
+import Entry from "../../types/entry";
 import EntryCard from "../EntryCard";
 
 const EntryList = ({ entries }: { entries: Entry[] }) => {
