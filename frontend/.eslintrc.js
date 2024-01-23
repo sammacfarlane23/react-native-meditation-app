@@ -23,6 +23,7 @@ module.exports = {
   rules: {
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
     "import/order": ["warn", { "newlines-between": "always" }],
     "arrow-body-style": ["error", "as-needed"],
   },

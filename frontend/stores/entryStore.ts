@@ -12,7 +12,7 @@ interface EntryState {
   getAllEntries: () => Promise<void>
   addEntry: (entry: Entry) => Promise<void>
   deleteEntry: (id: string) => Promise<void>
-  updateEntry: (id: string, updatedEntry: Entry) => Promise<void>
+  updateEntry: (id: string, updatedEntry: { text: string }) => Promise<void>
 }
 
 const useEntryStore = create<EntryState>()((set) => ({
@@ -32,27 +32,32 @@ const useEntryStore = create<EntryState>()((set) => ({
   },
   addEntry: async (entry) => {
     try {
-      const response = await superagent.post(`${API_URL}/entries`).send(entry)
+      await superagent.post(`${API_URL}/entries`).send(entry)
     } catch (err) {
       set({ error: 'Uh oh! An unexpected error occured.' })
     }
   },
   deleteEntry: async (id) => {
     try {
-      const response = await superagent.delete(`${API_URL}/entries/${id}`)
+      await superagent.delete(`${API_URL}/entries/${id}`)
     } catch (err) {
       set({ error: 'Uh oh! An unexpected error occured.' })
     }
   },
   // @TODO: Implement implement superagent and test
   updateEntry: async (id, updatedEntry: Entry) => {
-    await fetch(`${API_URL}/entries/:${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ text: updatedEntry.text })
-    })
+    // await fetch(`${API_URL}/entries/:${id}`, {
+    //   method: 'PUT',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({ text: updatedEntry.text })
+    // })
+    try {
+      await superagent.put(`${API_URL}/entries/${id}`).send(updatedEntry)
+    } catch (err) {
+      set({ error: 'Uh oh! An unexpected error occured.' })
+    }
   }
 }))
 
