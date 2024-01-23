@@ -1,44 +1,44 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NativeWindStyleSheet, useColorScheme } from "nativewind";
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { NativeWindStyleSheet, useColorScheme } from 'nativewind'
 
-import HomeScreen from "./screens/HomeScreen";
-import TimerScreen from "./screens/TimerScreen";
-import FinishScreen from "./screens/FinishScreen";
-import Entry from "./types/entry";
-import EditScreen from "./screens/EditScreen";
-import Header from "./components/Header";
+import HomeScreen from './screens/HomeScreen'
+import TimerScreen from './screens/TimerScreen'
+import FinishScreen from './screens/FinishScreen'
+import type Entry from './types/entry'
+import EditScreen from './screens/EditScreen'
+import Header from './components/Header'
 
 NativeWindStyleSheet.setOutput({
-  default: "native",
-});
+  default: 'native'
+})
 
-export type RootStackParamList = {
-  Home: undefined;
-  Timer: undefined;
-  Finish: { duration: number };
-  Edit: { entry: Entry };
-};
+export interface RootStackParamList {
+  Home: undefined
+  Timer: undefined
+  Finish: { duration: number }
+  Edit: { entry: Entry }
+}
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
-function App() {
-  const { colorScheme } = useColorScheme();
+function App () {
+  const { colorScheme } = useColorScheme()
 
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: colorScheme === "light" ? "#E8EBE4" : "#030712",
+            backgroundColor: colorScheme === 'light' ? '#E8EBE4' : '#030712'
           },
-          headerTintColor: "#E7ECEF",
+          headerTintColor: '#E7ECEF',
           headerTitleStyle: {
-            fontWeight: "bold",
-            fontSize: 20,
+            fontWeight: 'bold',
+            fontSize: 20
           },
           headerTitle: (props) => <Header {...props} />,
-          headerBackVisible: false,
+          headerBackVisible: false
         }}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
@@ -47,7 +47,7 @@ function App() {
         <Stack.Screen name="Edit" component={EditScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,13 +1,13 @@
-import { TouchableOpacity, Text } from "react-native";
-import React from "react";
-import classnames from "classnames";
+import { TouchableOpacity, Text } from 'react-native'
+import React from 'react'
+import classnames from 'classnames'
 
-type Props = {
-  children: React.ReactNode;
-  onPress: () => void;
-  className?: string;
-  textClassName?: string;
-};
+interface Props {
+  children: React.ReactNode
+  onPress: () => void
+  className?: string
+  textClassName?: string
+}
 
 const Button = ({
   children,
@@ -15,11 +15,10 @@ const Button = ({
   className,
   textClassName,
   ...rest
-}: Props) => {
-  return (
+}: Props): JSX.Element => (
     <TouchableOpacity
       className={classnames(
-        "py-2 px-4 min-w-full bg-gray-300 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75",
+        'py-2 px-4 min-w-full bg-gray-300 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75',
         className
       )}
       {...{ onPress }}
@@ -29,7 +28,6 @@ const Button = ({
         {children}
       </Text>
     </TouchableOpacity>
-  );
-};
+)
 
-export default Button;
+export default Button
