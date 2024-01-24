@@ -24,6 +24,8 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/no-var-requires": "off",
     "import/order": ["warn", { "newlines-between": "always" }],
     "arrow-body-style": ["error", "as-needed"],
   },

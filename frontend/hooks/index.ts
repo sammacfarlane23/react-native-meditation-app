@@ -1,6 +1,6 @@
-import { useColorScheme } from "nativewind";
+import { useColorScheme } from 'nativewind'
 
-export const useIsLightMode = () => {
-  const { colorScheme } = useColorScheme();
-  return colorScheme === "light";
-};
+export const useIsLightMode = (): boolean => {
+  const { colorScheme } = useColorScheme()
+  return colorScheme === 'light'
+}

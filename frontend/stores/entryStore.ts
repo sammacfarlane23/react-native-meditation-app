@@ -32,6 +32,7 @@ const useEntryStore = create<EntryState>()((set) => ({
   },
   addEntry: async (entry) => {
     try {
+      console.log('adding entry without text', entry, `${API_URL}/entries`)
       await superagent.post(`${API_URL}/entries`).send(entry)
     } catch (err) {
       set({ error: 'Uh oh! An unexpected error occured.' })
@@ -44,15 +45,7 @@ const useEntryStore = create<EntryState>()((set) => ({
       set({ error: 'Uh oh! An unexpected error occured.' })
     }
   },
-  // @TODO: Implement implement superagent and test
-  updateEntry: async (id, updatedEntry: Entry) => {
-    // await fetch(`${API_URL}/entries/:${id}`, {
-    //   method: 'PUT',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({ text: updatedEntry.text })
-    // })
+  updateEntry: async (id, updatedEntry: { text: string }) => {
     try {
       await superagent.put(`${API_URL}/entries/${id}`).send(updatedEntry)
     } catch (err) {

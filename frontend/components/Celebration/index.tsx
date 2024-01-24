@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
-import Modal from "react-native-modal";
-import Animated, { BounceIn, FadeOut } from "react-native-reanimated";
-import Confetti from "../Confetti";
+import { useEffect, useState } from 'react'
+import { View, Text } from 'react-native'
+import Modal from 'react-native-modal'
+import Animated, { BounceIn, FadeOut } from 'react-native-reanimated'
 
-const Celebration = () => {
-  const [showText, setShowText] = useState<boolean>(true);
+import Confetti from '../Confetti'
+
+const Celebration = (): JSX.Element => {
+  const [showText, setShowText] = useState<boolean>(true)
 
   useEffect(() => {
-    setShowText(true);
+    setShowText(true)
     const timer = setTimeout(() => {
-      setShowText(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, []);
+      setShowText(false)
+    }, 3000)
+    return () => { clearTimeout(timer) }
+  }, [])
 
   // if (!showText) return null;
 
@@ -43,7 +44,7 @@ const Celebration = () => {
       </View>
       <Confetti />
     </Modal>
-  );
-};
+  )
+}
 
-export default Celebration;
+export default Celebration

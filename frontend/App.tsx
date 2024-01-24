@@ -1,27 +1,16 @@
 import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NativeWindStyleSheet, useColorScheme } from 'nativewind'
 
 import HomeScreen from './Screens/HomeScreen'
 import TimerScreen from './Screens/TimerScreen'
 import FinishScreen from './Screens/FinishScreen'
-import type Entry from './types/entry'
 import EditScreen from './Screens/EditScreen'
 import Header from './components/Header'
+import { Stack } from './components/Navigation'
 
 NativeWindStyleSheet.setOutput({
   default: 'native'
 })
-
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-export type RootStackParamList = {
-  Home: undefined
-  Timer: undefined
-  Finish: { duration: number }
-  Edit: { entry: Entry }
-}
-
-const Stack = createNativeStackNavigator<RootStackParamList>()
 
 function App (): JSX.Element {
   const { colorScheme } = useColorScheme()

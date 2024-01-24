@@ -6,7 +6,6 @@ import {
   Keyboard
 } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
 import dayjs from 'dayjs'
 
 import { parseDate } from '../../utils'
@@ -15,6 +14,7 @@ import Duration from '../Duration'
 import { useIsLightMode } from '../../hooks'
 import Button from '../Button'
 import useEntryStore from '../../stores/entryStore'
+import { useNavigation } from '../Navigation'
 
 const colors = require('../../constants/colors')
 
@@ -25,11 +25,16 @@ const EntryForm = ({
   entry: Entry
   isEditing?: boolean
 }): JSX.Element => {
-  const getAllEntries = useEntryStore((state) => state.getAllEntries)
-  const addEntry = useEntryStore((state) => state.addEntry)
-  const deleteEntry = useEntryStore((state) => state.deleteEntry)
-  const updateEntry = useEntryStore((state) => state.updateEntry)
-  const [entryText, setEntryText] = useState<string | undefined>('')
+  const { addEntry, deleteEntry, updateEntry } = useEntryStore(
+    ({ getAllEntries, addEntry, deleteEntry, updateEntry }) => ({
+      getAllEntries,
+      addEntry,
+      deleteEntry,
+      updateEntry
+    })
+  )
+
+  const [entryText, setEntryText] = useState<string>('')
   const { date, duration, text, _id } = entry
   const [entryDate, setEntryDate] = useState<string>(date)
 
@@ -38,11 +43,45 @@ const EntryForm = ({
   useEffect(() => {
     setEntryDate(date || dayjs().format('YYYY-MM-DD HH:mm:ss'))
 
-    setEntryText(text)
+    setEntryText(text ?? '')
   }, [])
 
+  const handleSaveEntry = async (): Promise<void> => {
+    if (isEditing && _id) {
+      await updateEntry(_id, { text: entryText })
+    } else {
+      console.log('saving new entry with text')
+      await addEntry({
+        text: entryText,
+        date: entryDate,
+        duration
+      })
+    }
+    navigation.navigate('Home')
+  }
+
+  // @TODO: Debug this as it doesn't seem to work
+  const handleSaveEntryMetaData = async (): Promise<void> => {
+    await addEntry({
+      text: '',
+      date,
+      duration
+    })
+    navigation.navigate('Home')
+  }
+
+  const handleDeleteEntry = async (): Promise<void> => {
+    if (!_id) return
+    await deleteEntry(_id)
+    navigation.navigate('Home')
+  }
+
   return (
-    <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss()
+      }}
+    >
       <View className="items-center">
         <Text className="text-raisin-black dark:text-white my-4 self-start text-4xl font-semibold">
           {parseDate(entryDate)}{' '}
@@ -61,23 +100,14 @@ const EntryForm = ({
           value={entryText}
           placeholderTextColor={useIsLightMode() ? 'white' : 'black'}
           placeholder="How did this session make you feel?"
-          onBlur={() => { Keyboard.dismiss() }}
+          onBlur={() => {
+            Keyboard.dismiss()
+          }}
         />
         <View className="w-1/2 my-2">
           {entryText && (
             <Button
-              onPress={() => {
-                isEditing && _id
-                  ? updateEntry(_id, { text: entryText })
-                  // @TODO: Make sure this works
-                  : addEntry({
-                    text: entryText,
-                    date: entryDate,
-                    duration
-                  })
-                navigation.navigate('Home', { celebrate: true })
-                getAllEntries()
-              }}
+              onPress={handleSaveEntry}
               className="bg-french-gray dark:bg-green"
             >
               Save
@@ -85,26 +115,15 @@ const EntryForm = ({
           )}
           {!isEditing && (
             <Button
-              onPress={() => {
-                addEntry({
-                  text: '',
-                  date,
-                  duration
-                })
-                navigation.navigate('Home', { celebrate: true })
-              }}
+              onPress={handleSaveEntryMetaData}
               className="mt-4 bg-french-gray"
             >
               Skip journaling
             </Button>
           )}
-          {isEditing && _id && (
+          {isEditing && (
             <Button
-              onPress={() => {
-                deleteEntry(_id)
-                navigation.navigate('Home')
-                getAllEntries()
-              }}
+              onPress={handleDeleteEntry}
               className="bg-red-600 w-1/2 my-4 bg-red"
             >
               Delete

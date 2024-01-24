@@ -1,52 +1,56 @@
-import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
-import { useColorScheme } from "nativewind";
-import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import React from 'react'
+import { Text, View, TouchableOpacity } from 'react-native'
+import { useColorScheme } from 'nativewind'
+import { Feather } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
-const colors = require("../../constants/colors");
+const colors = require('../../constants/colors')
 
 const Header = ({
   children,
-  tintColor,
+  tintColor
 }: {
-  children: string;
-  tintColor?: string;
-}) => {
-  const navigation = useNavigation();
-  const { toggleColorScheme, colorScheme } = useColorScheme();
+  children: string
+  tintColor?: string
+}): JSX.Element => {
+  const navigation = useNavigation()
+  const { toggleColorScheme, colorScheme } = useColorScheme()
 
-  const isLightMode = colorScheme === "light";
+  const isLightMode = colorScheme === 'light'
 
   return (
     <View className="flex flex-row justify-between w-full pr-8">
-      {children === "Home" ? (
+      {children === 'Home'
+        ? (
         <Text className="text-raisin-black dark:text-off-white text-2xl font-bold">
           Meditation ME
         </Text>
-      ) : (
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+          )
+        : (
+        <TouchableOpacity onPress={() => { navigation.goBack() }}>
           <Feather
             name="arrow-left"
             size={24}
-            color={isLightMode ? colors["raisin-black"] : colors["off-white"]}
+            color={isLightMode ? colors['raisin-black'] : colors['off-white']}
           />
         </TouchableOpacity>
-      )}
-      {children !== "Home" && (
+          )}
+      {children !== 'Home' && (
         <Text className="text-raisin-black dark:text-off-white text-2xl font-bold">
           {children}
         </Text>
       )}
       <TouchableOpacity onPress={toggleColorScheme}>
-        {isLightMode ? (
-          <Feather name="moon" size={24} color={colors["raisin-black"]} />
-        ) : (
-          <Feather name="sun" size={24} color={colors["off-white"]} />
-        )}
+        {isLightMode
+          ? (
+          <Feather name="moon" size={24} color={colors['raisin-black']} />
+            )
+          : (
+          <Feather name="sun" size={24} color={colors['off-white']} />
+            )}
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
