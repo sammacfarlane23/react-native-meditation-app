@@ -25,12 +25,13 @@ const EntryForm = ({
   entry: Entry
   isEditing?: boolean
 }): JSX.Element => {
-  const { addEntry, deleteEntry, updateEntry } = useEntryStore(
-    ({ getAllEntries, addEntry, deleteEntry, updateEntry }) => ({
+  const { addEntry, deleteEntry, updateEntry, error } = useEntryStore(
+    ({ getAllEntries, addEntry, deleteEntry, updateEntry, error }) => ({
       getAllEntries,
       addEntry,
       deleteEntry,
-      updateEntry
+      updateEntry,
+      error
     })
   )
 
@@ -48,32 +49,34 @@ const EntryForm = ({
 
   const handleSaveEntry = async (): Promise<void> => {
     if (isEditing && _id) {
-      await updateEntry(_id, { text: entryText })
-    } else {
-      console.log('saving new entry with text')
-      await addEntry({
-        text: entryText,
-        date: entryDate,
-        duration
-      })
-    }
-    navigation.navigate('Home')
-  }
+      const response = await updateEntry(_id, { text: entryText })
+      if (response?.ok) navigation.navigate('Home')
 
-  // @TODO: Debug this as it doesn't seem to work
-  const handleSaveEntryMetaData = async (): Promise<void> => {
-    await addEntry({
-      text: '',
-      date,
+      return
+    }
+
+    const response = await addEntry({
+      text: entryText,
+      date: entryDate,
       duration
     })
-    navigation.navigate('Home')
+    if (response?.ok) navigation.navigate('Home')
+  }
+
+  const handleSaveEntryMetaData = async (): Promise<void> => {
+    const response = await addEntry({
+      text: '',
+      date: entryDate,
+      duration
+    })
+
+    if (response?.ok) navigation.navigate('Home')
   }
 
   const handleDeleteEntry = async (): Promise<void> => {
     if (!_id) return
-    await deleteEntry(_id)
-    navigation.navigate('Home')
+    const response = await deleteEntry(_id)
+    if (response?.ok) navigation.navigate('Home')
   }
 
   return (
@@ -130,6 +133,11 @@ const EntryForm = ({
             </Button>
           )}
         </View>
+          {error && (
+            <Text className="mt-5 text-lg font-bold text-red">
+              {error}
+            </Text>
+          )}
       </View>
     </TouchableWithoutFeedback>
   )

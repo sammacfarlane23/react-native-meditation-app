@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import superagent from 'superagent'
+import superagent, { type Response } from 'superagent'
 
 import type Entry from '../types/entry'
 
@@ -10,9 +10,9 @@ interface EntryState {
   error: string
   loading: boolean
   getAllEntries: () => Promise<void>
-  addEntry: (entry: Entry) => Promise<void>
-  deleteEntry: (id: string) => Promise<void>
-  updateEntry: (id: string, updatedEntry: { text: string }) => Promise<void>
+  addEntry: (entry: Entry) => Promise<Response | undefined>
+  deleteEntry: (id: string) => Promise<Response | undefined>
+  updateEntry: (id: string, updatedEntry: { text: string }) => Promise<Response | undefined>
 }
 
 const useEntryStore = create<EntryState>()((set) => ({
@@ -32,24 +32,26 @@ const useEntryStore = create<EntryState>()((set) => ({
   },
   addEntry: async (entry) => {
     try {
-      console.log('adding entry without text', entry, `${API_URL}/entries`)
-      await superagent.post(`${API_URL}/entries`).send(entry)
+      const response = await superagent.post(`${API_URL}/entries`).send(entry)
+      return response
     } catch (err) {
-      set({ error: 'Uh oh! An unexpected error occured.' })
+      set({ error: 'Uh oh! An unexpected error occured. Please try that again.' })
     }
   },
   deleteEntry: async (id) => {
     try {
-      await superagent.delete(`${API_URL}/entries/${id}`)
+      const response = await superagent.delete(`${API_URL}/entries/${id}`)
+      return response
     } catch (err) {
-      set({ error: 'Uh oh! An unexpected error occured.' })
+      set({ error: 'Uh oh! An unexpected error occured. Please try that again.' })
     }
   },
   updateEntry: async (id, updatedEntry: { text: string }) => {
     try {
-      await superagent.put(`${API_URL}/entries/${id}`).send(updatedEntry)
+      const response = await superagent.put(`${API_URL}/entries/${id}`).send(updatedEntry)
+      return response
     } catch (err) {
-      set({ error: 'Uh oh! An unexpected error occured.' })
+      set({ error: 'Uh oh! An unexpected error occured. Please try that again.' })
     }
   }
 }))

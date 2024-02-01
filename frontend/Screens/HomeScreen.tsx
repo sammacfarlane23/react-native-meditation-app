@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native'
+import { RefreshControl, ScrollView, Text, View } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 import dayjs from 'dayjs'
@@ -41,8 +41,18 @@ const HomeScreen = ({ navigation, route }: Props): JSX.Element => {
     }, [])
   )
 
+  const onRefresh = async (): Promise<void> => {
+    await getAllEntries()
+  }
+
   return (
     <View className="flex-1 h-full items-center bg-alabaster dark:bg-dark-gray justify-start px-2 pt-8">
+      <ScrollView
+      className='h-full w-full'
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={onRefresh} title="Pull down to refresh" titleColor="white" tintColor="white" />
+        }
+      >
       {!loading && error !== '' && (
         <Text className="mt-5 text-lg font-bold text-black dark:text-off-white">
           {error}
@@ -54,7 +64,10 @@ const HomeScreen = ({ navigation, route }: Props): JSX.Element => {
         </Text>
       )}
       {/* {showCelebration && <Celebration />} */}
-      {!loading && error.length === 0 && <EntryList entries={sortedEntries} />}
+        {!loading && error.length === 0 && (
+          <EntryList entries={sortedEntries} />
+        )}
+      </ScrollView>
       <View className="absolute bottom-16" style={{ width: 160 }}>
         <Button
           className="rounded-full w-full h-full flex items-center justify-center py-3 bg-myrtle-green dark:bg-red"
